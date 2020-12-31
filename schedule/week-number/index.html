@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Week Number Demo</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="./css/material.css" rel="stylesheet">
+    <script type="text/javascript" src="./script/ej2.min.js"></script>
+    <style type="text/css">
+        .properties .row {
+            padding: 10px 0;
+        }
+    </style>
+</head>
+
+<body class="e-css">
+    <div class="container-fluid" style="margin-top:15px;">
+        <div class="row">
+            <div class="col-md-9">
+                <div id="schedule"></div>
+            </div>
+            <div class="col-md-3 properties">
+                <div class="row">
+                    <div class="col-md-5" style="line-height:38px;font-weight:500;">First day of week</div>
+                    <div class="col-md-7">
+                        <select id="firstDayOfWeek" class="form-control e-css" name="ddl">
+                            <option value="0" selected>Sunday</option>
+                            <option value="1">Monday</option>
+                            <option value="2">Tuesday</option>
+                            <option value="3">Wednesday</option>
+                            <option value="4">Thursday</option>
+                            <option value="5">Friday</option>
+                            <option value="6">Saturday</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5" style="line-height:38px;font-weight:500;">Week Number</div>
+                    <div class="col-md-7">
+                        <select id="weekNumber" class="form-control e-css" name="ddl">
+                            <option value="FirstDayOfYear" selected>FirstDayOfYear</option>
+                            <option value="FirstFullWeek">FirstFullWeek</option>
+                            <option value="FirstFourDayWeek">FirstFourDayWeek</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="./script/index.js"></script>
+</body>
+
+</html>
