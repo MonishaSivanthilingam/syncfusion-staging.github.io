@@ -1030,8 +1030,8 @@ var Base = /** @class */ (function () {
         }
         newChanges = newChanges ? newChanges : {};
         Object(_util__WEBPACK_IMPORTED_MODULE_0__["extend"])(this.bulkChanges, {}, newChanges, true);
-        var sfBlazor = 'sfBlazor';
-        if (this.allowServerDataBinding && window[sfBlazor].updateModel) {
+        if (this.allowServerDataBinding) {
+            var sfBlazor = 'sfBlazor';
             window[sfBlazor].updateModel(this);
             this.bulkChanges = {};
         }
@@ -1799,6 +1799,7 @@ var versionBasedStatePersistence = false;
  * @param {boolean} status - Optional argument Specifies the status value to enable or disable versionBasedStatePersistence option.
  * @returns {void}
  */
+/* istanbul ignore next */
 function enableVersionBasedPersistence(status) {
     versionBasedStatePersistence = status;
 }
@@ -1873,6 +1874,7 @@ var Component = /** @class */ (function (_super) {
         this.render();
         this.refreshing = false;
     };
+    /* istanbul ignore next */
     Component.prototype.accessMount = function () {
         if (this.mount && !this.isReactHybrid) {
             this.mount();
@@ -1881,6 +1883,7 @@ var Component = /** @class */ (function (_super) {
     /**
      * Returns the route element of the component
      */
+    /* istanbul ignore next */
     Component.prototype.getRootElement = function () {
         if (this.isReactHybrid) {
             return this.actualElement;
@@ -1892,6 +1895,7 @@ var Component = /** @class */ (function (_super) {
     /**
      * Returns the persistence data for component
      */
+    /* istanbul ignore next */
     //tslint:disable:no-any
     Component.prototype.getLocalData = function () {
         var eleId = this.getModuleName() + this.element.id;
@@ -2037,6 +2041,7 @@ var Component = /** @class */ (function (_super) {
      * This is a instance method to create an element.
      * @private
      */
+    /* istanbul ignore next */
     //tslint:disable:no-any
     Component.prototype.createElement = function (tagName, prop, isVDOM) {
         if (isVDOM && this.isReactHybrid) {
@@ -2056,6 +2061,7 @@ var Component = /** @class */ (function (_super) {
      * @param argument - Arguments to be passed to caller.
      * @private
      */
+    /* istanbul ignore next */
     //tslint:disable:no-any
     Component.prototype.triggerStateChange = function (handler, argument) {
         if (this.isReactHybrid) {
@@ -2327,6 +2333,7 @@ function removeClass(elements, classes) {
         if (canRemove) {
             for (var _b = 0, classList_2 = classList; _b < classList_2.length; _b++) {
                 var className = classList_2[_b];
+                /* istanbul ignore next */
                 if (flag) {
                     var classes_1 = Object(_util__WEBPACK_IMPORTED_MODULE_1__["getValue"])('attributes.className', ele);
                     var classArr = classes_1.split(' ');
@@ -2466,6 +2473,7 @@ function attributes(element, attributes) {
     var ele = element;
     for (var _i = 0, keys_1 = keys; _i < keys_1.length; _i++) {
         var key = keys_1[_i];
+        /* istanbul ignore next */
         if (Object(_util__WEBPACK_IMPORTED_MODULE_1__["isObject"])(ele)) {
             var iKey = key;
             if (key === 'tabindex') {
@@ -2549,6 +2557,7 @@ function closest(element, selector) {
     if (typeof el.closest === 'function') {
         return el.closest(selector);
     }
+    /* istanbul ignore next */
     while (el && el.nodeType === 1) {
         if (matches(el, selector)) {
             return el;
@@ -2580,6 +2589,7 @@ function siblings(element) {
  * @param  {string} value - value need to set.
  * @private
  */
+/* istanbul ignore next */
 function getAttributeOrDefault(element, property, value) {
     var attrVal;
     var isObj = Object(_util__WEBPACK_IMPORTED_MODULE_1__["isObject"])(element);
@@ -2650,6 +2660,7 @@ function matches(element, selector) {
         return [].indexOf.call(document.querySelectorAll(selector), element) !== -1;
     }
 }
+/* istanbul ignore next */
 function includeInnerHTML(ele, innerHTML) {
     if (Object(_util__WEBPACK_IMPORTED_MODULE_1__["isObject"])(ele)) {
         if (innerHTML === '') {
@@ -2667,6 +2678,7 @@ function includeInnerHTML(ele, innerHTML) {
         ele.innerHTML = innerHTML;
     }
 }
+/* istanbul ignore next */
 //tslint:disable-next-line
 function containsClass(ele, className) {
     if (Object(_util__WEBPACK_IMPORTED_MODULE_1__["isObject"])(ele)) {
@@ -2684,6 +2696,7 @@ function containsClass(ele, className) {
  * @return {Element | VirtualObject}
  * @private
  */
+/* istanbul ignore next */
 //tslint:disable:no-any
 function cloneNode(element, deep) {
     if (Object(_util__WEBPACK_IMPORTED_MODULE_1__["isObject"])(element)) {
@@ -2860,10 +2873,12 @@ var Draggable = /** @class */ (function (_super) {
                 if (axis === 'vertical') {
                     this.parentScrollY = this.parentScrollY +
                         (this.parentScrollY === 0 ? element.scrollTop : element.scrollTop - this.parentScrollY);
+                    this.tempScrollHeight = element.scrollHeight;
                 }
                 else {
                     this.parentScrollX = this.parentScrollX +
                         (this.parentScrollX === 0 ? element.scrollLeft : element.scrollLeft - this.parentScrollX);
+                    this.tempScrollWidth = element.scrollWidth;
                 }
                 if (!Object(_util__WEBPACK_IMPORTED_MODULE_6__["isNullOrUndefined"])(element)) {
                     return this.getScrollableParent(element.parentNode, axis);
@@ -3011,9 +3026,10 @@ var Draggable = /** @class */ (function (_super) {
                 this.diffY = this.position.top - this.offset.top;
             }
             this.getScrollableValues();
-            if (!this.clone && !this.dragArea) {
-                pos.top -= this.parentScrollY;
-                pos.left -= this.parentScrollX;
+            // when drag element has margin-top
+            /* istanbul ignore next */
+            if (this.clone && element.offsetTop !== 0) {
+                pos.top += element.offsetTop;
             }
             var posValue = this.getProcessedPositionValue({
                 top: (pos.top - this.diffY) + 'px',
@@ -3121,8 +3137,9 @@ var Draggable = /** @class */ (function (_super) {
         var pagey = intCoord.pageY;
         var dLeft = this.position.left - this.diffX;
         var dTop = this.position.top - this.diffY;
+        var styles = getComputedStyle(helperElement);
+        var marginTop = parseFloat(styles.marginTop);
         if (this.dragArea) {
-            var styles = getComputedStyle(helperElement);
             if (this.pageX !== pagex || this.skipDistanceCheck) {
                 var helperWidth = helperElement.offsetWidth + (parseFloat(styles.marginLeft)
                     + parseFloat(styles.marginRight));
@@ -3167,16 +3184,43 @@ var Draggable = /** @class */ (function (_super) {
         var draEleTop;
         var draEleLeft;
         if (this.dragArea) {
+            this.dragLimit.top = this.clone ? this.dragLimit.top : 0;
             draEleTop = (top - iTop) < 0 ? this.dragLimit.top : (top - iTop);
             draEleLeft = (left - iLeft) < 0 ? this.dragElePosition.left : (left - iLeft);
+            // when drag-element has margin-top
+            /* istanbul ignore next */
+            if (marginTop > 0) {
+                if (this.clone) {
+                    draEleTop += this.element.offsetTop;
+                    if (dTop < 0) {
+                        if ((this.element.offsetTop + dTop) >= 0) {
+                            draEleTop = this.element.offsetTop + dTop;
+                        }
+                        else {
+                            draEleTop -= this.element.offsetTop;
+                        }
+                    }
+                    draEleTop = (this.dragLimit.bottom < draEleTop) ? this.dragLimit.bottom : draEleTop;
+                }
+                if ((top - iTop) < 0) {
+                    if (dTop + marginTop + (helperElement.offsetHeight - iTop) >= 0) {
+                        var tempDraEleTop = this.dragLimit.top + dTop - iTop;
+                        if ((tempDraEleTop + marginTop + iTop) < 0) {
+                            draEleTop -= marginTop + iTop;
+                        }
+                        else {
+                            draEleTop = tempDraEleTop;
+                        }
+                    }
+                    else {
+                        draEleTop -= marginTop + iTop;
+                    }
+                }
+            }
         }
         else {
             draEleTop = top - iTop;
             draEleLeft = left - iLeft;
-            if (!this.clone) {
-                draEleTop -= this.parentScrollY;
-                draEleLeft -= this.parentScrollX;
-            }
         }
         var dragValue = this.getProcessedPositionValue({ top: draEleTop + 'px', left: draEleLeft + 'px' });
         Object(_dom__WEBPACK_IMPORTED_MODULE_2__["setStyleAttribute"])(helperElement, this.getDragPosition(dragValue));
@@ -3335,6 +3379,12 @@ var Draggable = /** @class */ (function (_super) {
         var pageX;
         var pageY;
         var isOffsetParent = Object(_util__WEBPACK_IMPORTED_MODULE_6__["isNullOrUndefined"])(dragEle.offsetParent);
+        /* tslint:disable no-any */
+        if (!isOffsetParent && this.dragArea
+            && typeof this.dragArea !== 'string'
+            && (evt.y < this.dragArea.getClientRects()[0].y)) {
+            isOffsetParent = (this.dragArea.offsetParent.tagName === 'BODY');
+        }
         /* istanbul ignore next */
         if (isdragscroll) {
             pageX = this.clone ? intCoord.pageX :
@@ -3346,6 +3396,8 @@ var Draggable = /** @class */ (function (_super) {
             pageX = this.clone ? intCoord.pageX : (intCoord.pageX + window.pageXOffset) - this.relativeXPosition;
             pageY = this.clone ? intCoord.pageY : (intCoord.pageY + window.pageYOffset) - this.relativeYPosition;
         }
+        pageY -= this.tempScrollHeight ? this.parentScrollY : 0;
+        pageX -= this.tempScrollWidth ? this.parentScrollY : 0;
         return {
             left: pageX - (this.margin.left + this.cursorAt.left),
             top: pageY - (this.margin.top + this.cursorAt.top)
@@ -6437,7 +6489,7 @@ var IntlBase;
         if (day < 4) {
             weeknum = Math.floor((daynum + day - 1) / 7) + 1;
             if (weeknum > 52) {
-                var nYear = new Date(this.getFullYear() + 1, 0, 1);
+                var nYear = new Date(date.getFullYear() + 1, 0, 1);
                 var nday = nYear.getDay();
                 nday = nday >= 0 ? nday : nday + 7;
                 weeknum = nday < 4 ? 1 : 53;
@@ -8900,7 +8952,7 @@ function evalExp(str, nameSpace, helper) {
             else if (IF_STMT.test(cnt)) {
                 //handling if condition
                 cnt = '"; ' + cnt.replace(matches[1], rlStr.replace(WORDIF, function (strs) {
-                    return HandleSpecialCharArrObj(strs, nameSpace, localKeys);
+                    return HandleSpecialCharArrObj(strs, nameSpace, localKeys, true);
                 })) + '{ \n str = str + "';
             }
             else if (FOR_STMT.test(cnt)) {
@@ -8913,7 +8965,7 @@ function evalExp(str, nameSpace, helper) {
                     varCOunt = varCOunt + 1;
                     // tslint:disable-next-line
                     return 'var i' + varCOunt + '=0; i' + varCOunt + ' < ' + addNameSpace(rlStr_1[1], true, nameSpace, localKeys) + '.length; i' + varCOunt + '++';
-                }) + '{ \n ' + rlStr_1[0] + '= ' + addNameSpace(rlStr_1[1], true, nameSpace, localKeys)
+                }) + '{ \n ' + 'var ' + rlStr_1[0] + '= ' + addNameSpace(rlStr_1[1], true, nameSpace, localKeys)
                     + '[i' + varCOunt + ']; \n var ' + rlStr_1[0] + 'Index=i' + varCOunt + '; \n str = str + "';
             }
             else {
@@ -8972,7 +9024,11 @@ function evalExp(str, nameSpace, helper) {
         return cnt;
     });
 }
-function addNameSpace(str, addNS, nameSpace, ignoreList) {
+function addNameSpace(str, addNS, nameSpace, ignoreList, emptyStrCheck) {
+    /* istanbul ignore next */
+    if (emptyStrCheck && str === '') {
+        return str;
+    }
     return ((addNS && !(NOT_NUMBER.test(str)) && ignoreList.indexOf(str.split('.')[0]) === -1) ? nameSpace + '.' + str : str);
 }
 function NameSpaceArrObj(str, addNS, nameSpace, ignoreList) {
@@ -8999,7 +9055,7 @@ function SlashReplace(tempStr) {
     }
     return tempStr;
 }
-function HandleSpecialCharArrObj(str, nameSpaceNew, keys) {
+function HandleSpecialCharArrObj(str, nameSpaceNew, keys, emptyStrCheck) {
     str = str.trim();
     var windowFunc = /\window\./gm;
     if (!windowFunc.test(str)) {
@@ -9012,7 +9068,7 @@ function HandleSpecialCharArrObj(str, nameSpaceNew, keys) {
             return NameSpaceArrObj(str, !(quotes.test(str)) && (keys.indexOf(str) === -1), nameSpaceNew, keys);
         }
         else {
-            return addNameSpace(str, !(quotes.test(str)) && (keys.indexOf(str) === -1), nameSpaceNew, keys);
+            return addNameSpace(str, !(quotes.test(str)) && (keys.indexOf(str) === -1), nameSpaceNew, keys, emptyStrCheck);
         }
     }
     else {
@@ -9743,7 +9799,7 @@ function print(element, printWindow) {
  */
 function formatUnit(value) {
     var result = value + '';
-    if (result === 'auto' || result.indexOf('%') !== -1 || result.indexOf('px') !== -1) {
+    if (result.match(/auto|%|px|vh|vm|vmax|vmin|em/)) {
         return result;
     }
     return result + 'px';
@@ -10374,7 +10430,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -10743,7 +10799,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -10849,7 +10905,7 @@ var CheckBox = /** @class */ (function (_super) {
             this.changeState('check');
             this.checked = true;
         }
-        var changeEventArgs = { checked: this.updateVueArrayModel(false), event: event };
+        var changeEventArgs = { checked: this.element.checked, event: event };
         this.trigger('change', changeEventArgs);
     };
     /**
@@ -10924,9 +10980,6 @@ var CheckBox = /** @class */ (function (_super) {
         }
         if (this.value) {
             this.element.setAttribute('value', this.value);
-            if (this.isVue && typeof this.value === 'boolean' && this.value === true) {
-                this.setProperties({ 'checked': true }, true);
-            }
         }
         if (this.checked) {
             this.changeState('check');
@@ -11053,9 +11106,6 @@ var CheckBox = /** @class */ (function (_super) {
                     this.element.setAttribute('name', newProp.name);
                     break;
                 case 'value':
-                    if (this.isVue && typeof newProp.value === 'object') {
-                        break;
-                    }
                     this.element.setAttribute('value', newProp.value);
                     break;
                 case 'htmlAttributes':
@@ -11092,7 +11142,6 @@ var CheckBox = /** @class */ (function (_super) {
             this.wireEvents();
         }
         this.updateHtmlAttributeToWrapper();
-        this.updateVueArrayModel(true);
         this.renderComplete();
         this.wrapper = this.getWrapper();
     };
@@ -11157,37 +11206,6 @@ var CheckBox = /** @class */ (function (_super) {
         if (this.tagName === 'EJS-CHECKBOX') {
             _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].add(this.element, 'change', this.changeHandler, this);
         }
-    };
-    CheckBox.prototype.updateVueArrayModel = function (init) {
-        if (this.isVue && typeof this.value === 'object') {
-            var value = this.element.value;
-            if (value && this.value) {
-                if (init) {
-                    for (var i = 0; i < this.value.length; i++) {
-                        if (value === this.value[i]) {
-                            this.changeState('check');
-                            this.setProperties({ 'checked': true }, true);
-                        }
-                    }
-                }
-                else {
-                    var index = this.value.indexOf(value);
-                    if (this.checked) {
-                        if (index < 0) {
-                            this.value.push(value);
-                        }
-                    }
-                    else {
-                        if (index > -1) {
-                            this.value.splice(index, 1);
-                        }
-                    }
-                    // tslint:disable-next-line:no-any
-                    return this.value;
-                }
-            }
-        }
-        return this.element.checked;
     };
     CheckBox.prototype.updateHtmlAttributeToWrapper = function () {
         if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(this.htmlAttributes)) {
@@ -11312,7 +11330,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12314,7 +12332,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12335,7 +12353,6 @@ var LABEL = 'e-label';
 var RIPPLE = 'e-ripple-container';
 var RTL = 'e-rtl';
 var WRAPPER = 'e-radio-wrapper';
-var ATTRIBUTES = ['title', 'class', 'style', 'disabled', 'readonly', 'name', 'value'];
 /**
  * The RadioButton is a graphical user interface element that allows you to select one option from the choices.
  * It contains checked and unchecked states.
@@ -12362,13 +12379,13 @@ var RadioButton = /** @class */ (function (_super) {
     RadioButton.prototype.changeHandler = function (event) {
         this.checked = true;
         this.dataBind();
-        var value = this.isVue ? this.element.value : this.value;
-        this.trigger('change', { value: value, event: event });
+        var changeEventArgs = { value: this.value, event: event };
+        this.trigger('change', changeEventArgs);
         if (this.tagName === 'EJS-RADIOBUTTON') {
             event.stopPropagation();
         }
     };
-    RadioButton.prototype.updateChange = function () {
+    RadioButton.prototype.updateChange = function (state) {
         var input;
         var instance;
         var radioGrp = this.getRadioGroup();
@@ -12452,14 +12469,10 @@ var RadioButton = /** @class */ (function (_super) {
             this.initialCheckedValue = this.checked;
         }
         this.initWrapper();
-        this.updateHtmlAttribute();
         if (this.name) {
             this.element.setAttribute('name', this.name);
         }
-        if (this.isVue && this.element.value && this.element.value === this.value) {
-            this.checked = true;
-        }
-        if (this.value && (!this.isVue || !this.element.value)) {
+        if (this.value) {
             this.element.setAttribute('value', this.value);
         }
         if (this.checked) {
@@ -12524,7 +12537,7 @@ var RadioButton = /** @class */ (function (_super) {
             switch (prop) {
                 case 'checked':
                     if (newProp.checked) {
-                        this.updateChange();
+                        this.updateChange(newProp.checked);
                     }
                     this.element.checked = newProp.checked;
                     break;
@@ -12569,13 +12582,7 @@ var RadioButton = /** @class */ (function (_super) {
                     this.element.setAttribute('name', newProp.name);
                     break;
                 case 'value':
-                    if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(this.htmlAttributes) && this.htmlAttributes.value) {
-                        break;
-                    }
                     this.element.setAttribute('value', newProp.value);
-                    break;
-                case 'htmlAttributes':
-                    this.updateHtmlAttribute();
                     break;
             }
         }
@@ -12634,25 +12641,6 @@ var RadioButton = /** @class */ (function (_super) {
         }
         else {
             this.getLabel().classList.remove('e-right');
-        }
-    };
-    RadioButton.prototype.updateHtmlAttribute = function () {
-        if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(this.htmlAttributes)) {
-            for (var _i = 0, _a = Object.keys(this.htmlAttributes); _i < _a.length; _i++) {
-                var key = _a[_i];
-                if (ATTRIBUTES.indexOf(key) > -1) {
-                    var wrapper = this.element.parentElement;
-                    if (key === 'class') {
-                        Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["addClass"])([wrapper], this.htmlAttributes[key].split(' '));
-                    }
-                    else if (key === 'title' || key === 'style') {
-                        wrapper.setAttribute(key, this.htmlAttributes[key]);
-                    }
-                    else {
-                        this.element.setAttribute(key, this.htmlAttributes[key]);
-                    }
-                }
-            }
         }
     };
     RadioButton.prototype.unWireEvents = function () {
@@ -12732,9 +12720,6 @@ var RadioButton = /** @class */ (function (_super) {
     __decorate([
         Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["Property"])(false)
     ], RadioButton.prototype, "enableHtmlSanitizer", void 0);
-    __decorate([
-        Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["Property"])({})
-    ], RadioButton.prototype, "htmlAttributes", void 0);
     RadioButton = RadioButton_1 = __decorate([
         _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["NotifyPropertyChanges"]
     ], RadioButton);
@@ -12783,7 +12768,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -18768,7 +18753,6 @@ var AutoComplete = /** @class */ (function (_super) {
     function AutoComplete(options, element) {
         var _this = _super.call(this, options, element) || this;
         _this.isFiltered = false;
-        _this.searchList = false;
         return _this;
     }
     ;
@@ -18858,7 +18842,6 @@ var AutoComplete = /** @class */ (function (_super) {
             };
             this.trigger('filtering', eventArgs_1, function (eventArgs) {
                 if (!eventArgs.cancel && !_this.isFiltered && !eventArgs.preventDefaultAction) {
-                    _this.searchList = true;
                     _this.filterAction(_this.dataSource, null, _this.fields);
                 }
             });
@@ -18904,10 +18887,9 @@ var AutoComplete = /** @class */ (function (_super) {
         this.postBackAction();
     };
     AutoComplete.prototype.postBackAction = function () {
-        if (this.autofill && !Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(this.liCollections[0]) && this.searchList) {
+        if (this.autofill && !Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(this.liCollections[0])) {
             var items = [this.liCollections[0]];
             var searchItem = Object(_common_incremental_search__WEBPACK_IMPORTED_MODULE_4__["Search"])(this.inputElement.value, items, 'StartsWith', this.ignoreCase);
-            this.searchList = false;
             if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(searchItem.item)) {
                 _super.prototype.setAutoFill.call(this, this.liCollections[0], true);
             }
@@ -20290,11 +20272,7 @@ var DropDownBase = /** @class */ (function (_super) {
      * * Constructor for DropDownBase class
      */
     function DropDownBase(options, element) {
-        var _this = _super.call(this, options, element) || this;
-        _this.preventChange = false;
-        _this.isAngular = false;
-        _this.isPreventChange = false;
-        return _this;
+        return _super.call(this, options, element) || this;
     }
     ;
     DropDownBase.prototype.getPropObject = function (prop, newProp, oldProp) {
@@ -20680,7 +20658,6 @@ var DropDownBase = /** @class */ (function (_super) {
         var ulElement;
         this.isActive = true;
         var eventArgs = { cancel: false, data: dataSource, query: query };
-        this.isPreventChange = this.isAngular && this.preventChange ? true : this.isPreventChange;
         this.trigger('actionBegin', eventArgs, function (eventArgs) {
             if (!eventArgs.cancel) {
                 _this.showSpinner();
@@ -20691,7 +20668,6 @@ var DropDownBase = /** @class */ (function (_super) {
                         return;
                     }
                     eventArgs.data.executeQuery(_this.getQuery(eventArgs.query)).then(function (e) {
-                        _this.isPreventChange = _this.isAngular && _this.preventChange ? true : _this.isPreventChange;
                         _this.trigger('actionComplete', e, function (e) {
                             if (!e.cancel) {
                                 var listItems = e.result;
@@ -20717,7 +20693,6 @@ var DropDownBase = /** @class */ (function (_super) {
                     var dataManager = new _syncfusion_ej2_data__WEBPACK_IMPORTED_MODULE_1__["DataManager"](eventArgs.data);
                     var listItems = (_this.getQuery(eventArgs.query)).executeLocal(dataManager);
                     var localDataArgs = { cancel: false, result: listItems };
-                    _this.isPreventChange = _this.isAngular && _this.preventChange ? true : _this.isPreventChange;
                     _this.trigger('actionComplete', localDataArgs, function (localDataArgs) {
                         if (!localDataArgs.cancel) {
                             ulElement = _this.renderItems(localDataArgs.result, fields);
@@ -21003,10 +20978,6 @@ var DropDownBase = /** @class */ (function (_super) {
     DropDownBase.prototype.getSortedDataSource = function (dataSource) {
         if (dataSource && this.sortOrder !== 'None') {
             var textField = this.fields.text ? this.fields.text : 'text';
-            if (this.typeOfData(dataSource).typeof === 'string' || this.typeOfData(dataSource).typeof === 'number'
-                || this.typeOfData(dataSource).typeof === 'boolean') {
-                textField = '';
-            }
             dataSource = _syncfusion_ej2_lists__WEBPACK_IMPORTED_MODULE_2__["ListBase"].getDataSource(dataSource, _syncfusion_ej2_lists__WEBPACK_IMPORTED_MODULE_2__["ListBase"].addSorting(this.sortOrder, textField));
         }
         return dataSource;
@@ -21578,8 +21549,6 @@ var DropDownList = /** @class */ (function (_super) {
         var _this = _super.call(this, options, element) || this;
         _this.previousValue = null;
         _this.isListSearched = false;
-        _this.preventChange = false;
-        _this.isAngular = false;
         return _this;
     }
     ;
@@ -22712,12 +22681,7 @@ var DropDownList = /** @class */ (function (_super) {
                 value: this.value,
                 element: this.element
             };
-            if (this.isAngular && this.preventChange) {
-                this.preventChange = false;
-            }
-            else {
-                this.trigger('change', eventArgs);
-            }
+            this.trigger('change', eventArgs);
             if (this.isServerBlazor && this.enablePersistence) {
                 // tslint:disable-next-line
                 this.interopAdaptor.invokeMethodAsync('ServerChange');
@@ -23233,10 +23197,6 @@ var DropDownList = /** @class */ (function (_super) {
                 if (_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["Browser"].isDevice && _this.isFilterLayout()) {
                     _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].add(_this.list, 'scroll', _this.listScroll, _this);
                 }
-                if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(_this.list)) {
-                    _this.unWireListEvents();
-                    _this.wireListEvents();
-                }
                 Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["attributes"])(_this.targetElement(), { 'aria-expanded': 'true' });
                 var inputParent = _this.isFiltering() ? _this.filterInput.parentElement : _this.inputWrapper.container;
                 Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["addClass"])([inputParent], [dropDownListClasses.inputFocus]);
@@ -23337,7 +23297,7 @@ var DropDownList = /** @class */ (function (_super) {
                 _this.isDocumentClick = false;
                 _this.destroyPopup();
                 var formElement = Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["closest"])(_this.inputElement, 'form');
-                if (_this.isFiltering() && _this.actionCompleteData.list && _this.actionCompleteData.list[0]) {
+                if (_this.isFiltering() && formElement && _this.actionCompleteData.list && _this.actionCompleteData.list[0]) {
                     _this.isActive = true;
                     _this.onActionComplete(_this.actionCompleteData.ulElement, _this.actionCompleteData.list, null, true);
                 }
@@ -23500,7 +23460,7 @@ var DropDownList = /** @class */ (function (_super) {
         }
     };
     DropDownList.prototype.clearText = function () {
-        this.filterInput.value = this.typedString = '';
+        this.filterInput.value = '';
         this.searchLists(null);
     };
     DropDownList.prototype.listScroll = function () {
@@ -23805,9 +23765,6 @@ var DropDownList = /** @class */ (function (_super) {
         var isChangeText = Object.keys(newProp).indexOf('text') !== -1 && Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(newProp.text);
         if (this.getModuleName() !== 'autocomplete' && this.allowFiltering && (isChangeValue || isChangeText)) {
             this.itemData = null;
-        }
-        if (this.allowFiltering && newProp.dataSource && !Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(Object.keys(newProp.dataSource))) {
-            this.actionCompleteData = { ulElement: null, list: null, isUpdated: false };
         }
     };
     DropDownList.prototype.updateDataSource = function (props) {
@@ -28184,11 +28141,11 @@ var ListBox = /** @class */ (function (_super) {
                     this.setSelection();
                 }
                 if (listObj.sortOrder !== 'None' || this.selectionSettings.showCheckbox
-                    !== listObj.selectionSettings.showCheckbox || listObj.fields.groupBy || listObj.itemTemplate || this.itemTemplate) {
-                    var sortable = Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_2__["getComponent"])(ul_2, 'sortable');
+                    !== listObj.selectionSettings.showCheckbox || listObj.fields.groupBy) {
+                    var sortabale = Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_2__["getComponent"])(ul_2, 'sortable');
                     ul_2.innerHTML = listObj.renderItems(listData, listObj.fields).innerHTML;
-                    if (sortable.placeHolderElement) {
-                        ul_2.appendChild(sortable.placeHolderElement);
+                    if (sortabale.placeHolderElement) {
+                        ul_2.appendChild(sortabale.placeHolderElement);
                     }
                     ul_2.appendChild(args.helper);
                     listObj.setSelection();
@@ -28933,8 +28890,8 @@ var ListBox = /** @class */ (function (_super) {
         if (value) {
             elems = value;
         }
-        var isRefresh = tListBox.sortOrder !== 'None' || (tListBox.selectionSettings.showCheckbox !==
-            fListBox.selectionSettings.showCheckbox) || tListBox.fields.groupBy || tListBox.itemTemplate || fListBox.itemTemplate;
+        var isRefresh = tListBox.sortOrder !== 'None' ||
+            (tListBox.selectionSettings.showCheckbox !== fListBox.selectionSettings.showCheckbox) || tListBox.fields.groupBy;
         fListBox.value = [];
         if (elems.length) {
             this.removeSelected(fListBox, elems);
@@ -29086,8 +29043,8 @@ var ListBox = /** @class */ (function (_super) {
         var _this = this;
         var listData = [].slice.call(tListBox.listData);
         var jsonData = [].slice.call(tListBox.jsonData);
-        var isRefresh = tListBox.sortOrder !== 'None' || (tListBox.selectionSettings.showCheckbox !==
-            fListBox.selectionSettings.showCheckbox) || tListBox.fields.groupBy || tListBox.itemTemplate || fListBox.itemTemplate;
+        var isRefresh = tListBox.sortOrder !== 'None' ||
+            (tListBox.selectionSettings.showCheckbox !== fListBox.selectionSettings.showCheckbox) || tListBox.fields.groupBy;
         this.removeSelected(fListBox, fListBox.getSelectedItems());
         var tempItems = [].slice.call(fListBox.jsonData);
         var localDataArgs = { cancel: false, items: tempItems, eventName: this.toolbarAction };
@@ -29967,6 +29924,7 @@ var CheckBoxSelection = /** @class */ (function () {
         this.parent.off('selectAllText', this.setLocale);
         this.parent.off('filterBarPlaceholder', this.setPlaceholder);
         this.parent.off('addItem', this.checboxCreate);
+        _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_2__["EventHandler"].remove(document, 'mousedown', this.onDocumentClick);
         this.parent.off('popupFullScreen', this.setPopupFullScreen);
     };
     CheckBoxSelection.prototype.listOption = function (args) {
@@ -30061,7 +30019,6 @@ var CheckBoxSelection = /** @class */ (function () {
     };
     CheckBoxSelection.prototype.destroy = function () {
         this.removeEventListener();
-        _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_2__["EventHandler"].remove(document, 'mousedown', this.onDocumentClick);
     };
     CheckBoxSelection.prototype.listSelection = function (args) {
         var target;
@@ -30207,9 +30164,6 @@ var CheckBoxSelection = /** @class */ (function () {
     };
     CheckBoxSelection.prototype.clearText = function (e) {
         this.parent.targetInputElement.value = '';
-        if (this.parent.allowFiltering && this.parent.targetInputElement.value === '') {
-            this.parent.search(null);
-        }
         this.parent.refreshPopup();
         this.parent.refreshListItems(null);
         this.clearIconElement.style.visibility = 'hidden';
@@ -31520,12 +31474,7 @@ var MultiSelect = /** @class */ (function (_super) {
                 isInteracted: event ? true : false,
                 element: this.element
             };
-            if (this.isAngular && this.preventChange) {
-                this.preventChange = false;
-            }
-            else {
-                this.trigger('change', eventArgs);
-            }
+            this.trigger('change', eventArgs);
             this.updateTempValue();
             if (!this.changeOnBlur) {
                 this.dispatchEvent(this.hiddenElement, 'change');
@@ -31800,6 +31749,9 @@ var MultiSelect = /** @class */ (function (_super) {
         if (index <= 0 && (this.mode === 'CheckBox' && this.allowFiltering)) {
             this.keyAction = false;
             this.notify('inputFocus', { module: 'CheckBoxSelection', enable: this.mode === 'CheckBox', value: 'focus' });
+        }
+        else {
+            this.list.focus();
         }
         this.moveByList(-1);
         this.updateAriaAttribute();
@@ -32479,7 +32431,6 @@ var MultiSelect = /** @class */ (function (_super) {
             },
             cancel: false
         };
-        this.isPreventChange = this.isAngular && this.preventChange;
         this.trigger('tagging', eventArgs, function (eventArgs) {
             if (!eventArgs.cancel) {
                 if (eventArgs.setClass && typeof eventArgs.setClass === 'string' && (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_2__["isBlazor"])() && _this.isServerRendered)) {
@@ -32734,10 +32685,7 @@ var MultiSelect = /** @class */ (function (_super) {
         if (this.mode !== 'Box' && (!this.inputFocus || this.mode === 'CheckBox')) {
             this.updateDelimView();
         }
-        if (this.inputElement.value !== '') {
-            this.makeTextBoxEmpty();
-            this.search(null);
-        }
+        this.makeTextBoxEmpty();
         this.checkPlaceholderSize();
         if (this.isPopupOpen()) {
             this.refreshPopup();
@@ -32822,14 +32770,12 @@ var MultiSelect = /** @class */ (function (_super) {
             this.showPopup();
         }
         this.openClick(e);
-        if (this.checkTextLength() && !this.allowFiltering && !Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_2__["isNullOrUndefined"])(e) && (e.keyCode !== 8)) {
+        if (this.checkTextLength() && !this.allowFiltering && (e.keyCode !== 8)) {
             this.focusAtFirstListItem();
         }
         else {
             var text = this.targetElement();
-            if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_2__["isNullOrUndefined"])(e)) {
-                this.keyCode = e.keyCode;
-            }
+            this.keyCode = e.keyCode;
             if (this.allowFiltering) {
                 var eventArgs_1 = {
                     preventDefaultAction: false,
@@ -41553,6 +41499,7 @@ var TicksData = /** @class */ (function (_super) {
 
 /**
  * It illustrates the color track data in slider.
+ * {% codeBlock src='slider/colorrange/index.md' %}{% endcodeBlock %}
  */
 var ColorRangeData = /** @class */ (function (_super) {
     __extends(ColorRangeData, _super);
@@ -41573,6 +41520,7 @@ var ColorRangeData = /** @class */ (function (_super) {
 
 /**
  * It illustrates the limit data in slider.
+ * {% codeBlock src='slider/limits/index.md' %}{% endcodeBlock %}
  */
 var LimitData = /** @class */ (function (_super) {
     __extends(LimitData, _super);
@@ -41722,6 +41670,7 @@ var Slider = /** @class */ (function (_super) {
         _this.scaleTransform = 'transform .4s cubic-bezier(.25, .8, .25, 1)';
         _this.customAriaText = null;
         _this.drag = true;
+        _this.initialTooltip = true;
         return _this;
     }
     Slider.prototype.preRender = function () {
@@ -41808,7 +41757,9 @@ var Slider = /** @class */ (function (_super) {
      * @private
      */
     Slider.prototype.render = function () {
-        this.initialize();
+        if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() || !this.isServerRendered) {
+            this.initialize();
+        }
         this.initRender();
         this.wireEvents();
         this.setZindex();
@@ -41817,6 +41768,16 @@ var Slider = /** @class */ (function (_super) {
     Slider.prototype.initialize = function () {
         Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["addClass"])([this.element], classNames.root);
         this.setCSSClass();
+    };
+    Slider.prototype.setElementWidth = function (width) {
+        if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(width)) {
+            if (typeof width === 'number') {
+                this.sliderContainer.style.width = Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["formatUnit"])(width);
+            }
+            else if (typeof width === 'string') {
+                this.sliderContainer.style.width = (width.match(/px|%|em/)) ? (width) : (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["formatUnit"])(width));
+            }
+        }
     };
     Slider.prototype.setCSSClass = function (oldCSSClass) {
         if (oldCSSClass) {
@@ -41851,11 +41812,19 @@ var Slider = /** @class */ (function (_super) {
      * @private
      */
     Slider.prototype.initRender = function () {
-        this.sliderContainer = this.createElement('div', { className: classNames.sliderContainer + ' ' + classNames.controlWrapper });
-        this.element.parentNode.insertBefore(this.sliderContainer, this.element);
-        this.sliderContainer.appendChild(this.element);
-        this.sliderTrack = this.createElement('div', { className: classNames.sliderTrack });
-        this.element.appendChild(this.sliderTrack);
+        if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && this.isServerRendered) {
+            this.sliderContainer = this.element.parentElement;
+            this.sliderTrack = this.element.querySelector('.e-slider-track');
+            this.hiddenInput = this.element.parentElement.querySelector('.e-slider-input');
+        }
+        else {
+            this.sliderContainer = this.createElement('div', { className: classNames.sliderContainer + ' ' + classNames.controlWrapper });
+            this.element.parentNode.insertBefore(this.sliderContainer, this.element);
+            this.sliderContainer.appendChild(this.element);
+            this.sliderTrack = this.createElement('div', { className: classNames.sliderTrack });
+            this.element.appendChild(this.sliderTrack);
+        }
+        this.setElementWidth(this.width);
         this.element.tabIndex = -1;
         this.getThemeInitialization();
         this.setHandler();
@@ -41863,16 +41832,18 @@ var Slider = /** @class */ (function (_super) {
         if (this.limits.enabled) {
             this.createLimitBar();
         }
-        this.setOrientClass();
-        this.hiddenInput = (this.createElement('input', {
-            attrs: {
-                type: 'hidden', value: (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(this.value) ? this.min.toString() : this.value.toString()),
-                name: this.element.getAttribute('name') || this.element.getAttribute('id') ||
-                    '_' + (Math.random() * 1000).toFixed(0) + 'slider', class: classNames.sliderHiddenInput
-            }
-        }));
-        this.hiddenInput.tabIndex = -1;
-        this.sliderContainer.appendChild(this.hiddenInput);
+        if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() || !this.isServerRendered) {
+            this.setOrientClass();
+            this.hiddenInput = (this.createElement('input', {
+                attrs: {
+                    type: 'hidden', value: (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(this.value) ? this.min.toString() : this.value.toString()),
+                    name: this.element.getAttribute('name') || this.element.getAttribute('id') ||
+                        '_' + (Math.random() * 1000).toFixed(0) + 'slider', class: classNames.sliderHiddenInput
+                }
+            }));
+            this.hiddenInput.tabIndex = -1;
+            this.sliderContainer.appendChild(this.hiddenInput);
+        }
         if (this.showButtons) {
             this.setButtons();
         }
@@ -41900,17 +41871,19 @@ var Slider = /** @class */ (function (_super) {
         if (this.tooltip.isVisible) {
             this.renderTooltip();
         }
-        if (!this.enabled) {
-            Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["addClass"])([this.sliderContainer], [classNames.sliderDisabled]);
-        }
-        else {
-            Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["removeClass"])([this.sliderContainer], [classNames.sliderDisabled]);
-        }
-        if (this.readonly) {
-            Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["addClass"])([this.sliderContainer], [classNames.readonly]);
-        }
-        else {
-            Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["removeClass"])([this.sliderContainer], [classNames.readonly]);
+        if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() || !this.isServerRendered) {
+            if (!this.enabled) {
+                Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["addClass"])([this.sliderContainer], [classNames.sliderDisabled]);
+            }
+            else {
+                Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["removeClass"])([this.sliderContainer], [classNames.sliderDisabled]);
+            }
+            if (this.readonly) {
+                Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["addClass"])([this.sliderContainer], [classNames.readonly]);
+            }
+            else {
+                Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["removeClass"])([this.sliderContainer], [classNames.readonly]);
+            }
         }
     };
     Slider.prototype.getThemeInitialization = function () {
@@ -41936,20 +41909,28 @@ var Slider = /** @class */ (function (_super) {
         }
     };
     Slider.prototype.createLimitBar = function () {
-        var firstElementClassName = this.type !== 'Range' ? classNames.limitBarDefault :
-            classNames.limitBarFirst;
-        firstElementClassName += ' ' + classNames.limits;
-        this.limitBarFirst = (this.createElement('div', {
-            attrs: { class: firstElementClassName }
-        }));
-        this.element.appendChild(this.limitBarFirst);
-        if (this.type === 'Range') {
-            this.limitBarSecond = (this.createElement('div', {
-                attrs: {
-                    class: classNames.limitBarSecond + ' ' + classNames.limits
-                }
+        if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && this.isServerRendered) {
+            this.limitBarFirst = this.element.querySelectorAll('.e-limits')[0];
+            if (this.type === 'Range') {
+                this.limitBarSecond = this.element.querySelectorAll('.e-limit-second')[0];
+            }
+        }
+        else {
+            var firstElementClassName = this.type !== 'Range' ? classNames.limitBarDefault :
+                classNames.limitBarFirst;
+            firstElementClassName += ' ' + classNames.limits;
+            this.limitBarFirst = (this.createElement('div', {
+                attrs: { class: firstElementClassName }
             }));
-            this.element.appendChild(this.limitBarSecond);
+            this.element.appendChild(this.limitBarFirst);
+            if (this.type === 'Range') {
+                this.limitBarSecond = (this.createElement('div', {
+                    attrs: {
+                        class: classNames.limitBarSecond + ' ' + classNames.limits
+                    }
+                }));
+                this.element.appendChild(this.limitBarSecond);
+            }
         }
     };
     Slider.prototype.setOrientClass = function () {
@@ -41999,22 +41980,32 @@ var Slider = /** @class */ (function (_super) {
         }
     };
     Slider.prototype.createSecondHandle = function () {
-        this.secondHandle = this.createElement('div', {
-            attrs: {
-                class: classNames.sliderHandle, 'role': 'slider', tabIndex: '0'
-            }
-        });
-        this.secondHandle.classList.add(classNames.sliderSecondHandle);
-        this.element.appendChild(this.secondHandle);
+        if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && this.isServerRendered) {
+            this.secondHandle = this.element.querySelector('.e-handle-second');
+        }
+        else {
+            this.secondHandle = this.createElement('div', {
+                attrs: {
+                    class: classNames.sliderHandle, 'role': 'slider', tabIndex: '0'
+                }
+            });
+            this.secondHandle.classList.add(classNames.sliderSecondHandle);
+            this.element.appendChild(this.secondHandle);
+        }
     };
     Slider.prototype.createFirstHandle = function () {
-        this.firstHandle = this.createElement('div', {
-            attrs: {
-                class: classNames.sliderHandle, 'role': 'slider', tabIndex: '0'
-            }
-        });
-        this.firstHandle.classList.add(classNames.sliderFirstHandle);
-        this.element.appendChild(this.firstHandle);
+        if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && this.isServerRendered) {
+            this.firstHandle = this.element.querySelector('.e-handle-first');
+        }
+        else {
+            this.firstHandle = this.createElement('div', {
+                attrs: {
+                    class: classNames.sliderHandle, 'role': 'slider', tabIndex: '0'
+                }
+            });
+            this.firstHandle.classList.add(classNames.sliderFirstHandle);
+            this.element.appendChild(this.firstHandle);
+        }
         if (this.isMaterialTooltip) {
             this.materialHandle = this.createElement('div', {
                 attrs: {
@@ -42089,12 +42080,16 @@ var Slider = /** @class */ (function (_super) {
         }
     };
     Slider.prototype.handleFocus = function (e) {
+        this.focusSliderElement();
+        this.sliderBarClick(e);
         if (e.currentTarget === this.firstHandle) {
             this.firstHandle.classList.add(classNames.sliderHandleFocused);
         }
         else {
             this.secondHandle.classList.add(classNames.sliderHandleFocused);
         }
+        _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].add(document, 'mousemove touchmove', this.sliderBarMove, this);
+        _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].add(document, 'mouseup touchend', this.sliderBarUp, this);
     };
     Slider.prototype.handleOver = function (e) {
         if (this.tooltip.isVisible && this.tooltip.showOn === 'Hover') {
@@ -42118,23 +42113,25 @@ var Slider = /** @class */ (function (_super) {
         }
     };
     Slider.prototype.setEnableRTL = function () {
-        this.enableRtl && this.orientation !== 'Vertical' ? Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["addClass"])([this.sliderContainer], classNames.rtl) :
-            Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["removeClass"])([this.sliderContainer], classNames.rtl);
-        var preDir = (this.orientation !== 'Vertical') ? this.horDir : this.verDir;
-        if (this.enableRtl) {
-            this.horDir = 'right';
-            this.verDir = 'bottom';
-        }
-        else {
-            this.horDir = 'left';
-            this.verDir = 'bottom';
-        }
-        var currDir = (this.orientation !== 'Vertical') ? this.horDir : this.verDir;
-        if (preDir !== currDir) {
-            if (this.orientation === 'Horizontal') {
-                Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["setStyleAttribute"])(this.firstHandle, { 'right': '', 'left': 'auto' });
-                if (this.type === 'Range') {
-                    Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["setStyleAttribute"])(this.secondHandle, { 'top': '', 'left': 'auto' });
+        if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() || !this.isServerRendered) {
+            this.enableRtl && this.orientation !== 'Vertical' ? Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["addClass"])([this.sliderContainer], classNames.rtl) :
+                Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["removeClass"])([this.sliderContainer], classNames.rtl);
+            var preDir = (this.orientation !== 'Vertical') ? this.horDir : this.verDir;
+            if (this.enableRtl) {
+                this.horDir = 'right';
+                this.verDir = 'bottom';
+            }
+            else {
+                this.horDir = 'left';
+                this.verDir = 'bottom';
+            }
+            var currDir = (this.orientation !== 'Vertical') ? this.horDir : this.verDir;
+            if (preDir !== currDir) {
+                if (this.orientation === 'Horizontal') {
+                    Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["setStyleAttribute"])(this.firstHandle, { 'right': '', 'left': 'auto' });
+                    if (this.type === 'Range') {
+                        Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["setStyleAttribute"])(this.secondHandle, { 'top': '', 'left': 'auto' });
+                    }
                 }
             }
         }
@@ -42147,19 +42144,30 @@ var Slider = /** @class */ (function (_super) {
             value: this.value,
             text: ''
         };
-        this.setTooltipContent();
-        args.text = text = this.tooltipObj.content;
-        this.trigger('tooltipChange', args, function (observedArgs) {
-            _this.addTooltipClass(observedArgs.text);
-            if (text !== observedArgs.text) {
-                _this.customAriaText = observedArgs.text;
-                _this.tooltipObj.content = observedArgs.text;
-                _this.setAriaAttrValue(_this.firstHandle);
-                if (_this.type === 'Range') {
-                    _this.setAriaAttrValue(_this.secondHandle);
-                }
+        if (this.initialTooltip) {
+            this.initialTooltip = false;
+            if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && this.isServerRendered) {
+                args.text = this.formatContent(this.tooltipFormatInfo, false);
             }
-        });
+            else {
+                this.setTooltipContent();
+                args.text = text = this.tooltipObj.content;
+            }
+            this.trigger('tooltipChange', args, function (observedArgs) {
+                _this.addTooltipClass(observedArgs.text);
+                if (text !== observedArgs.text) {
+                    _this.customAriaText = observedArgs.text;
+                    _this.tooltipObj.content = observedArgs.text;
+                    _this.setAriaAttrValue(_this.firstHandle);
+                    if (_this.type === 'Range') {
+                        _this.setAriaAttrValue(_this.secondHandle);
+                    }
+                }
+            });
+            if (this.isMaterialTooltip) {
+                this.setPreviousVal('change', this.value);
+            }
+        }
     };
     Slider.prototype.setTooltipContent = function () {
         var content;
@@ -42274,13 +42282,18 @@ var Slider = /** @class */ (function (_super) {
             }
         }
     };
+    Slider.prototype.materialTooltipEventCallBack = function (event) {
+        this.sliderBarClick(event);
+        _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].add(document, 'mousemove touchmove', this.sliderBarMove, this);
+        _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].add(document, 'mouseup touchend', this.sliderBarUp, this);
+    };
     Slider.prototype.wireMaterialTooltipEvent = function (destroy) {
         if (this.isMaterialTooltip) {
             if (!destroy) {
-                _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].add(this.tooltipElement, 'mousedown touchstart', this.sliderDown, this);
+                _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].add(this.tooltipElement, 'mousedown touchstart', this.materialTooltipEventCallBack, this);
             }
             else {
-                _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].remove(this.tooltipElement, 'mousedown touchstart', this.sliderDown);
+                _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].remove(this.tooltipElement, 'mousedown touchstart', this.materialTooltipEventCallBack);
             }
         }
     };
@@ -42350,7 +42363,9 @@ var Slider = /** @class */ (function (_super) {
             tooltipContentElement.classList.add(classNames.materialTooltipHide);
             this.firstHandle.style.cursor = '-webkit-grab';
             this.firstHandle.style.cursor = 'grab';
-            this.materialHandle.style.transform = 'scale(1)';
+            if (this.materialHandle) {
+                this.materialHandle.style.transform = 'scale(1)';
+            }
             this.tooltipElement.classList.remove(classNames.materialTooltipOpen);
             this.setTooltipTransform();
             this.tooltipTarget = undefined;
@@ -42358,13 +42373,15 @@ var Slider = /** @class */ (function (_super) {
         }
     };
     Slider.prototype.checkTooltipPosition = function (args) {
+        var tooltipClass = this.tooltipPositionCalculation(args.collidedPosition);
         if (this.tooltipCollidedPosition === undefined ||
-            this.tooltipCollidedPosition !== args.collidedPosition) {
+            this.tooltipCollidedPosition !== args.collidedPosition || !args.element.classList.contains(tooltipClass)) {
             if (this.isMaterialTooltip) {
-                var tooltipClass = this.tooltipPositionCalculation(args.collidedPosition);
-                args.element.classList.remove(this.previousTooltipClass);
-                args.element.classList.add(tooltipClass);
-                this.previousTooltipClass = tooltipClass;
+                if (tooltipClass !== undefined) {
+                    args.element.classList.remove(this.previousTooltipClass);
+                    args.element.classList.add(tooltipClass);
+                    this.previousTooltipClass = tooltipClass;
+                }
                 if (args.element.style.transform && args.element.classList.contains(classNames.materialTooltipOpen) &&
                     args.element.firstElementChild.innerText.length <= 4) {
                     args.element.style.transform = this.getTooltipTransformProperties(this.previousTooltipClass).rotate;
@@ -42412,7 +42429,9 @@ var Slider = /** @class */ (function (_super) {
         });
         if (this.isMaterialTooltip) {
             this.sliderContainer.classList.add(classNames.materialSlider);
-            this.tooltipValue();
+            if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])()) {
+                this.tooltipValue();
+            }
             this.tooltipObj.animation.close.effect = 'None';
             this.tooltipObj.open(this.firstHandle);
         }
@@ -42422,17 +42441,23 @@ var Slider = /** @class */ (function (_super) {
         this.tooltipCollidedPosition = undefined;
     };
     Slider.prototype.setButtons = function () {
-        this.firstBtn = this.createElement('div', { className: classNames.sliderButton + ' ' + classNames.firstButton });
-        this.firstBtn.appendChild(this.createElement('span', { className: classNames.sliderButtonIcon }));
-        this.firstBtn.tabIndex = -1;
-        this.secondBtn = this.createElement('div', { className: classNames.sliderButton + ' ' + classNames.secondButton });
-        this.secondBtn.appendChild(this.createElement('span', { className: classNames.sliderButtonIcon }));
-        this.secondBtn.tabIndex = -1;
-        this.sliderContainer.classList.add(classNames.sliderButtonClass);
-        this.sliderContainer.appendChild(this.firstBtn);
-        this.sliderContainer.appendChild(this.secondBtn);
-        this.sliderContainer.appendChild(this.element);
-        this.buttonTitle();
+        if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && this.isServerRendered) {
+            this.firstBtn = this.element.parentElement.querySelector('.e-slider-button.e-first-button');
+            this.secondBtn = this.element.parentElement.querySelector('.e-slider-button.e-second-button');
+        }
+        else {
+            this.firstBtn = this.createElement('div', { className: classNames.sliderButton + ' ' + classNames.firstButton });
+            this.firstBtn.appendChild(this.createElement('span', { className: classNames.sliderButtonIcon }));
+            this.firstBtn.tabIndex = -1;
+            this.secondBtn = this.createElement('div', { className: classNames.sliderButton + ' ' + classNames.secondButton });
+            this.secondBtn.appendChild(this.createElement('span', { className: classNames.sliderButtonIcon }));
+            this.secondBtn.tabIndex = -1;
+            this.sliderContainer.classList.add(classNames.sliderButtonClass);
+            this.sliderContainer.appendChild(this.firstBtn);
+            this.sliderContainer.appendChild(this.secondBtn);
+            this.sliderContainer.appendChild(this.element);
+            this.buttonTitle();
+        }
     };
     Slider.prototype.buttonTitle = function () {
         var enabledRTL = this.enableRtl && this.orientation !== 'Vertical';
@@ -42482,7 +42507,7 @@ var Slider = /** @class */ (function (_super) {
         }
     };
     Slider.prototype.repeatHandlerUp = function (e) {
-        this.changeEvent('changed');
+        this.changeEvent('changed', e);
         this.closeTooltip();
         clearInterval(this.repeatInterval);
         this.getHandle().focus();
@@ -42507,13 +42532,19 @@ var Slider = /** @class */ (function (_super) {
     };
     // tslint:disable-next-line:max-func-body-length
     Slider.prototype.renderScale = function () {
+        var liElementPosition = 0;
         var orien = this.orientation === 'Vertical' ? 'v' : 'h';
         var spanText;
         this.noOfDecimals = this.numberOfDecimals(this.step);
-        this.ul = this.createElement('ul', {
-            className: classNames.scale + ' ' + 'e-' + orien + '-scale ' + classNames.tick + '-' + this.ticks.placement.toLowerCase(),
-            attrs: { role: 'presentation', tabIndex: '-1', 'aria-hidden': 'true' }
-        });
+        if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && this.isServerRendered) {
+            this.ul = this.element.querySelector('ul');
+        }
+        else {
+            this.ul = this.createElement('ul', {
+                className: classNames.scale + ' ' + 'e-' + orien + '-scale ' + classNames.tick + '-' + this.ticks.placement.toLowerCase(),
+                attrs: { role: 'presentation', tabIndex: '-1', 'aria-hidden': 'true' }
+            });
+        }
         this.ul.style.zIndex = '-1';
         if (_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["Browser"].isAndroid && orien === 'h') {
             this.ul.classList.add(classNames.sliderTickPosition);
@@ -42533,7 +42564,9 @@ var Slider = /** @class */ (function (_super) {
         var customStep = this.customTickCounter(bigNum);
         var count = !Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(this.customValues) && this.customValues.length > 0 ?
             (bigNum * customStep) + bigNum : Math.abs((max - min) / steps);
-        this.element.appendChild(this.ul);
+        if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() || !this.isServerRendered) {
+            this.element.appendChild(this.ul);
+        }
         var li;
         var start = parseFloat(this.min.toString());
         if (orien === 'v') {
@@ -42598,11 +42631,21 @@ var Slider = /** @class */ (function (_super) {
                 for (var j = 0; j < repeat; j++) {
                     this.createTick(li, start, tickWidth);
                 }
+                if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && this.isServerRendered && Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(this.customValues)) {
+                    this.updateTicksValues(start, this.ul.children[liElementPosition]);
+                    liElementPosition++;
+                }
             }
             else if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(this.customValues)) {
                 this.formatTicksValue(li, start);
+                if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && this.isServerRendered && Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(this.customValues)) {
+                    this.updateTicksValues(start, this.ul.children[liElementPosition]);
+                    liElementPosition++;
+                }
             }
-            this.ul.appendChild(li);
+            if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() || !this.isServerRendered) {
+                this.ul.appendChild(li);
+            }
             this.tickElementCollection.push(li);
             var decimalPoints = void 0;
             if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(this.customValues)) {
@@ -42622,6 +42665,34 @@ var Slider = /** @class */ (function (_super) {
             }
         }
         this.ticksAlignment(orien, tickWidth);
+    };
+    Slider.prototype.updateTicksValues = function (start, liElement) {
+        if (liElement.childElementCount > 0) {
+            for (var i = 0; i < liElement.childElementCount; i++) {
+                this.blazortTicksValue(liElement, start, liElement.children[i]);
+            }
+        }
+        else {
+            this.blazortTicksValue(liElement, start, null);
+        }
+    };
+    Slider.prototype.blazortTicksValue = function (li, start, span) {
+        var _this = this;
+        var tickText = this.formatNumber(start);
+        var text = !Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(this.ticks) && !Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(this.ticks.format) ?
+            this.formatString(start, this.ticksFormatInfo).formatString : tickText;
+        var eventArgs = { value: start, text: text, tickElement: li };
+        this.trigger('renderingTicks', eventArgs, function (observedArgs) {
+            li.setAttribute('title', observedArgs.text.toString());
+            if (span) {
+                if (_this.enableHtmlSanitizer) {
+                    span.innerHTML = _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["SanitizeHtmlHelper"].sanitize(observedArgs.text.toString());
+                }
+                else {
+                    span.innerHTML = observedArgs.text.toString();
+                }
+            }
+        });
     };
     Slider.prototype.ticksAlignment = function (orien, tickWidth, triggerEvent) {
         if (triggerEvent === void 0) { triggerEvent = true; }
@@ -42702,8 +42773,10 @@ var Slider = /** @class */ (function (_super) {
         }
     };
     Slider.prototype.tickValuePosition = function () {
+        this.firstChild = this.element.querySelector('ul').children[0];
         var first = this.firstChild.getBoundingClientRect();
         var firstChild;
+        var otherChild;
         var smallStep = this.ticks.smallStep;
         var count = Math.abs((parseFloat(Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["formatUnit"])(this.max))) - (parseFloat(Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["formatUnit"])(this.min)))) / smallStep;
         if (this.firstChild.children.length > 0) {
@@ -42722,7 +42795,9 @@ var Slider = /** @class */ (function (_super) {
             (first.height * 2) : (first.width * 2);
         for (var i = 0; i < this.firstChild.children.length; i++) {
             if (this.orientation === 'Vertical') {
-                this.firstChild.children[i].style.top = -(firstChild.height / 2) + 'px';
+                if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() || !this.isServerRendered) {
+                    this.firstChild.children[i].style.top = -(firstChild.height / 2) + 'px';
+                }
             }
             else {
                 if (!this.enableRtl) {
@@ -42735,9 +42810,11 @@ var Slider = /** @class */ (function (_super) {
             }
         }
         for (var i = 0; i < other.length; i++) {
-            var otherChild = other[i].getBoundingClientRect();
+            otherChild = other[i].getBoundingClientRect();
             if (this.orientation === 'Vertical') {
-                Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["setStyleAttribute"])(other[i], { top: (tickWidth - otherChild.height) / 2 + 'px' });
+                if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() || !this.isServerRendered) {
+                    Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["setStyleAttribute"])(other[i], { top: (tickWidth - otherChild.height) / 2 + 'px' });
+                }
             }
             else {
                 Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["setStyleAttribute"])(other[i], { left: (tickWidth - otherChild.width) / 2 + 'px' });
@@ -42746,29 +42823,73 @@ var Slider = /** @class */ (function (_super) {
         if (this.enableRtl && this.lastChild.children.length && count !== 0) {
             this.lastChild.children[0].style.left = -(this.lastChild.getBoundingClientRect().width / 2) + 'px';
             if (this.ticks.placement === 'Both') {
-                this.lastChild.children[1].style.left = -(this.lastChild.getBoundingClientRect().width / 2) + 'px';
+                if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])()) {
+                    this.lastChild.children[1].style.left = -(this.lastChild.getBoundingClientRect().width / 2) + 'px';
+                }
             }
         }
         if (count === 0) {
             if (this.orientation === 'Horizontal') {
                 if (!this.enableRtl) {
                     this.firstChild.classList.remove(classNames.sliderLastTick);
-                    this.firstChild.style.left = this.firstHandle.style.left;
+                    if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])()) {
+                        this.firstChild.style.left = this.firstHandle.style.left;
+                    }
                 }
                 else {
                     this.firstChild.classList.remove(classNames.sliderLastTick);
                     this.firstChild.style.right = this.firstHandle.style.right;
-                    this.firstChild.children[0].style.left =
-                        (this.firstChild.getBoundingClientRect().width / 2) + 2 + 'px';
-                    if (this.ticks.placement === 'Both') {
-                        this.firstChild.children[1].style.left =
+                    if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])()) {
+                        this.firstChild.children[0].style.left =
                             (this.firstChild.getBoundingClientRect().width / 2) + 2 + 'px';
+                        if (this.ticks.placement === 'Both') {
+                            this.firstChild.children[1].style.left =
+                                (this.firstChild.getBoundingClientRect().width / 2) + 2 + 'px';
+                        }
                     }
                 }
             }
-            if (this.orientation === 'Vertical') {
-                this.firstChild.classList.remove(classNames.sliderLastTick);
+            if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() || !this.isServerRendered) {
+                if (this.orientation === 'Vertical') {
+                    this.firstChild.classList.remove(classNames.sliderLastTick);
+                }
             }
+        }
+        if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && this.isServerRendered) {
+            var args = void 0;
+            if (this.firstChild != null) {
+                if (this.orientation === 'Horizontal') {
+                    args = { firstTickPostion: this.firstChild.children[0].style.left };
+                }
+                else {
+                    args = { firstTickPostion: -(firstChild.height / 2) + 'px' };
+                }
+            }
+            if (other[0] != null) {
+                if (this.orientation === 'Horizontal') {
+                    args = { otherTicksPosition: other[0].style.left };
+                }
+                else {
+                    args = { otherTicksPosition: (tickWidth - otherChild.height) / 2 + 'px' };
+                }
+            }
+            if (this.firstChild != null && other[0] != null) {
+                if (this.orientation === 'Horizontal') {
+                    args = {
+                        firstTickPostion: this.firstChild.children[0].style.left,
+                        otherTicksPosition: other[0].style.left
+                    };
+                }
+                else {
+                    args = {
+                        firstTickPostion: -(firstChild.height / 2) + 'px',
+                        otherTicksPosition: (tickWidth - otherChild.height) / 2 + 'px'
+                    };
+                }
+            }
+            // tslint:disable
+            this.interopAdaptor.invokeMethodAsync('SliderTicksData', args);
+            // tslint:enable
         }
     };
     Slider.prototype.setAriaAttrValue = function (element) {
@@ -43019,11 +43140,11 @@ var Slider = /** @class */ (function (_super) {
                 this.handlePos1 = values[1];
                 this.preHandlePos1 = this.handlePos1;
             }
-            this.setHandlePosition();
+            this.setHandlePosition(null);
             this.handleStart();
             this.value = this.handleVal1;
             this.setAriaAttrValue(this.firstHandle);
-            this.changeEvent('changed');
+            this.changeEvent('changed', null);
         }
         else {
             this.validateRangeValue();
@@ -43056,10 +43177,10 @@ var Slider = /** @class */ (function (_super) {
             }
         }
         else if (this.isMaterialTooltip && this.tooltipElement) {
-            this.tooltipElement.style.zIndex = (this.zIndex + 4) + '';
+            this.tooltipElement.style.zIndex = Object(_syncfusion_ej2_popups__WEBPACK_IMPORTED_MODULE_1__["getZindexPartial"])(this.element) + '';
         }
     };
-    Slider.prototype.setHandlePosition = function () {
+    Slider.prototype.setHandlePosition = function (event) {
         var _this = this;
         var handle;
         var pos = (this.activeHandle === 1) ? this.handlePos1 : this.handlePos2;
@@ -43078,8 +43199,11 @@ var Slider = /** @class */ (function (_super) {
             else {
                 handle.style.bottom = pos + "px";
             }
+            if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && _this.isServerRendered) {
+                handle.style.removeProperty('visibility');
+            }
         });
-        this.changeEvent('change');
+        this.changeEvent('change', event);
     };
     Slider.prototype.getHandle = function () {
         return (this.activeHandle === 1) ? this.firstHandle : this.secondHandle;
@@ -43087,17 +43211,18 @@ var Slider = /** @class */ (function (_super) {
     Slider.prototype.setRangeValue = function () {
         this.updateRangeValue();
         this.activeHandle = 1;
-        this.setHandlePosition();
+        this.setHandlePosition(null);
         this.activeHandle = 2;
-        this.setHandlePosition();
+        this.setHandlePosition(null);
         this.activeHandle = 1;
     };
-    Slider.prototype.changeEvent = function (eventName) {
+    Slider.prototype.changeEvent = function (eventName, e) {
         var previous = eventName === 'change' ? this.previousVal : this.previousChanged;
         if (this.type !== 'Range') {
             this.setProperties({ 'value': this.handleVal1 }, true);
-            if (previous !== this.value) {
-                this.trigger(eventName, this.changeEventArgs(eventName));
+            if (previous !== this.value && (!this.isMaterialTooltip || !this.initialTooltip)) {
+                this.trigger(eventName, this.changeEventArgs(eventName, e));
+                this.initialTooltip = true;
                 this.setPreviousVal(eventName, this.value);
             }
             this.setAriaAttrValue(this.firstHandle);
@@ -43107,21 +43232,25 @@ var Slider = /** @class */ (function (_super) {
             this.setProperties({ 'value': value }, true);
             if (previous.length === this.value.length
                 && this.value[0] !== previous[0] || this.value[1] !== previous[1]) {
-                this.trigger(eventName, this.changeEventArgs(eventName));
+                this.initialTooltip = false;
+                this.trigger(eventName, this.changeEventArgs(eventName, e));
+                this.initialTooltip = true;
                 this.setPreviousVal(eventName, this.value);
             }
             this.setAriaAttrValue(this.getHandle());
         }
         this.hiddenInput.value = this.value.toString();
     };
-    Slider.prototype.changeEventArgs = function (eventName) {
+    Slider.prototype.changeEventArgs = function (eventName, e) {
         var eventArgs;
-        if (this.tooltip.isVisible && this.tooltipObj) {
-            this.tooltipValue();
+        if (this.tooltip.isVisible && this.tooltipObj && this.initialTooltip) {
+            if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() || !this.isServerRendered) {
+                this.tooltipValue();
+            }
             eventArgs = {
                 value: this.value,
                 previousValue: eventName === 'change' ? this.previousVal : this.previousChanged,
-                action: eventName, text: this.tooltipObj.content
+                action: eventName, text: this.tooltipObj.content, isInteracted: Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(e) ? false : true
             };
         }
         else {
@@ -43131,7 +43260,8 @@ var Slider = /** @class */ (function (_super) {
                 action: eventName, text: Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(this.ticksFormatInfo.format) ? this.value.toString() :
                     (this.type !== 'Range' ? this.formatString(this.value, this.ticksFormatInfo).formatString :
                         (this.formatString(this.value[0], this.ticksFormatInfo).formatString + ' - ' +
-                            this.formatString(this.value[1], this.ticksFormatInfo).formatString))
+                            this.formatString(this.value[1], this.ticksFormatInfo).formatString)),
+                isInteracted: Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(e) ? false : true
             };
         }
         return eventArgs;
@@ -43272,9 +43402,14 @@ var Slider = /** @class */ (function (_super) {
             this.setLimitBar();
         }
         if (this.ticks.placement !== 'None' && this.ul) {
-            this.removeElement(this.ul);
-            this.ul = undefined;
+            if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])()) {
+                this.removeElement(this.ul);
+                this.ul = undefined;
+            }
             this.renderScale();
+            if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])()) {
+                this.tickValuePosition();
+            }
         }
         this.handleStart();
         if (!this.tooltip.isVisible) {
@@ -43285,7 +43420,9 @@ var Slider = /** @class */ (function (_super) {
                 }
             });
         }
-        this.refreshTooltip(this.tooltipTarget);
+        if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() || !this.isServerRendered) {
+            this.refreshTooltip(this.tooltipTarget);
+        }
         this.setBarColor();
     };
     Slider.prototype.changeHandleValue = function (value) {
@@ -43322,7 +43459,7 @@ var Slider = /** @class */ (function (_super) {
             if (this.type !== 'Default') {
                 this.setRangeBar();
             }
-            this.setHandlePosition();
+            this.setHandlePosition(null);
         }
     };
     Slider.prototype.tempStartEnd = function () {
@@ -43415,10 +43552,10 @@ var Slider = /** @class */ (function (_super) {
     Slider.prototype.sliderBarClick = function (evt) {
         evt.preventDefault();
         var pos;
-        if (evt.type === 'mousedown' || evt.type === 'click') {
+        if (evt.type === 'mousedown' || evt.type === 'mouseup' || evt.type === 'click') {
             pos = { x: evt.clientX, y: evt.clientY };
         }
-        else if (evt.type === 'touchstart') {
+        else if (evt.type === 'touchend' || evt.type === 'touchstart') {
             pos = { x: evt.changedTouches[0].clientX, y: evt.changedTouches[0].clientY };
         }
         var handlepos = this.xyToPosition(pos);
@@ -43466,6 +43603,7 @@ var Slider = /** @class */ (function (_super) {
                 !this.getHandle().classList.contains(classNames.sliderTabHandle)) {
                 this.materialChange();
             }
+            this.sliderBarUp(evt);
             this.tooltipToggle(this.getHandle());
             return;
         }
@@ -43478,45 +43616,13 @@ var Slider = /** @class */ (function (_super) {
         if (this.type !== 'Default') {
             this.rangeBar.style.transition = transition.rangeBar;
         }
-        this.setHandlePosition();
+        this.setHandlePosition(evt);
+        if (this.isMaterialTooltip) {
+            this.initialTooltip = false;
+        }
+        this.changeEvent('changed', evt);
         if (this.type !== 'Default') {
             this.setRangeBar();
-        }
-    };
-    Slider.prototype.sliderDown = function (event) {
-        var _a, _b;
-        event.preventDefault();
-        this.focusSliderElement();
-        if (this.type === 'Range' && this.drag && event.target === this.rangeBar) {
-            var xPostion = void 0;
-            var yPostion = void 0;
-            if (event.type === 'mousedown') {
-                _a = [event.clientX, event.clientY], xPostion = _a[0], yPostion = _a[1];
-            }
-            else if (event.type === 'touchstart') {
-                _b = [event.changedTouches[0].clientX, event.changedTouches[0].clientY], xPostion = _b[0], yPostion = _b[1];
-            }
-            if (this.orientation === 'Horizontal') {
-                this.firstPartRemain = xPostion - this.rangeBar.getBoundingClientRect().left;
-                this.secondPartRemain = this.rangeBar.getBoundingClientRect().right - xPostion;
-            }
-            else {
-                this.firstPartRemain = yPostion - this.rangeBar.getBoundingClientRect().top;
-                this.secondPartRemain = this.rangeBar.getBoundingClientRect().bottom - yPostion;
-            }
-            this.minDiff = this.handleVal2 - this.handleVal1;
-            this.tooltipToggle(this.rangeBar);
-            var focusedElement = this.element.querySelector('.' + classNames.sliderTabHandle);
-            if (focusedElement) {
-                focusedElement.classList.remove(classNames.sliderTabHandle);
-            }
-            _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].add(document, 'mousemove touchmove', this.dragRangeBarMove, this);
-            _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].add(document, 'mouseup touchend', this.dragRangeBarUp, this);
-        }
-        else {
-            this.sliderBarClick(event);
-            _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].add(document, 'mousemove touchmove', this.sliderBarMove, this);
-            _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].add(document, 'mouseup touchend', this.sliderBarUp, this);
         }
     };
     Slider.prototype.handleValueAdjust = function (handleValue, assignValue, handleNumber) {
@@ -43536,6 +43642,7 @@ var Slider = /** @class */ (function (_super) {
         if (event.type !== 'touchmove') {
             event.preventDefault();
         }
+        this.rangeBarDragged = true;
         var pos;
         this.rangeBar.style.transition = 'none';
         this.firstHandle.style.transition = 'none';
@@ -43593,17 +43700,18 @@ var Slider = /** @class */ (function (_super) {
             }
         }
         this.activeHandle = 1;
-        this.setHandlePosition();
+        this.setHandlePosition(event);
         this.activeHandle = 2;
-        this.setHandlePosition();
+        this.setHandlePosition(event);
         this.tooltipToggle(this.rangeBar);
         this.setRangeBar();
     };
-    Slider.prototype.sliderBarUp = function () {
-        this.changeEvent('changed');
+    Slider.prototype.sliderBarUp = function (event) {
+        this.changeEvent('changed', event);
         this.handleFocusOut();
         this.firstHandle.classList.remove(classNames.sliderActiveHandle);
         if (this.type === 'Range') {
+            this.initialTooltip = false;
             this.secondHandle.classList.remove(classNames.sliderActiveHandle);
         }
         this.closeTooltip();
@@ -43689,7 +43797,7 @@ var Slider = /** @class */ (function (_super) {
         if (this.type !== 'Default') {
             this.rangeBar.style.transition = 'none';
         }
-        this.setHandlePosition();
+        this.setHandlePosition(evt);
         if (this.isMaterial && !this.tooltip.isVisible &&
             !this.getHandle().classList.contains(classNames.sliderTabHandle)) {
             this.materialChange();
@@ -43700,10 +43808,15 @@ var Slider = /** @class */ (function (_super) {
         }
     };
     Slider.prototype.dragRangeBarUp = function (event) {
-        this.changeEvent('changed');
+        if (!this.rangeBarDragged) {
+            this.focusSliderElement();
+            this.sliderBarClick(event);
+        }
+        this.changeEvent('changed', event);
         this.closeTooltip();
         _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].remove(document, 'mousemove touchmove', this.dragRangeBarMove);
         _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].remove(document, 'mouseup touchend', this.dragRangeBarUp);
+        this.rangeBarDragged = false;
     };
     Slider.prototype.checkRepeatedValue = function (currentValue) {
         if (this.type === 'Range') {
@@ -43781,11 +43894,50 @@ var Slider = /** @class */ (function (_super) {
             _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].remove(this.secondBtn, 'focusout', this.sliderFocusOut);
         }
     };
+    Slider.prototype.rangeBarMousedown = function (event) {
+        var _a, _b;
+        event.preventDefault();
+        this.focusSliderElement();
+        if (this.type === 'Range' && this.drag && event.target === this.rangeBar) {
+            var xPostion = void 0;
+            var yPostion = void 0;
+            if (event.type === 'mousedown') {
+                _a = [event.clientX, event.clientY], xPostion = _a[0], yPostion = _a[1];
+            }
+            else if (event.type === 'touchstart') {
+                _b = [event.changedTouches[0].clientX, event.changedTouches[0].clientY], xPostion = _b[0], yPostion = _b[1];
+            }
+            if (this.orientation === 'Horizontal') {
+                this.firstPartRemain = xPostion - this.rangeBar.getBoundingClientRect().left;
+                this.secondPartRemain = this.rangeBar.getBoundingClientRect().right - xPostion;
+            }
+            else {
+                this.firstPartRemain = yPostion - this.rangeBar.getBoundingClientRect().top;
+                this.secondPartRemain = this.rangeBar.getBoundingClientRect().bottom - yPostion;
+            }
+            this.minDiff = this.handleVal2 - this.handleVal1;
+            this.tooltipToggle(this.rangeBar);
+            var focusedElement = this.element.querySelector('.' + classNames.sliderTabHandle);
+            if (focusedElement) {
+                focusedElement.classList.remove(classNames.sliderTabHandle);
+            }
+            _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].add(document, 'mousemove touchmove', this.dragRangeBarMove, this);
+            _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].add(document, 'mouseup touchend', this.dragRangeBarUp, this);
+        }
+    };
+    Slider.prototype.elementClick = function (event) {
+        event.preventDefault();
+        this.focusSliderElement();
+        this.sliderBarClick(event);
+    };
     Slider.prototype.wireEvents = function () {
         this.onresize = this.reposition.bind(this);
         window.addEventListener('resize', this.onresize);
         if (this.enabled && !this.readonly) {
-            _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].add(this.element, 'mousedown touchstart', this.sliderDown, this);
+            _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].add(this.element, 'click', this.elementClick, this);
+            if (this.type === 'Range' && this.drag) {
+                _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].add(this.rangeBar, 'mousedown touchstart', this.rangeBarMousedown, this);
+            }
             _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].add(this.sliderContainer, 'keydown', this.keyDown, this);
             _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].add(this.sliderContainer, 'keyup', this.keyUp, this);
             _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].add(this.element, 'focusout', this.sliderFocusOut, this);
@@ -43804,7 +43956,10 @@ var Slider = /** @class */ (function (_super) {
         }
     };
     Slider.prototype.unwireEvents = function () {
-        _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].remove(this.element, 'mousedown touchstart', this.sliderDown);
+        _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].remove(this.element, 'click', this.elementClick);
+        if (this.type === 'Range' && this.drag) {
+            _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].remove(this.rangeBar, 'mousedown touchstart', this.rangeBarMousedown);
+        }
         _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].remove(this.sliderContainer, 'keydown', this.keyDown);
         _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].remove(this.sliderContainer, 'keyup', this.keyUp);
         _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].remove(this.element, 'focusout', this.sliderFocusOut);
@@ -43847,7 +44002,7 @@ var Slider = /** @class */ (function (_super) {
             }
         }
         this.closeTooltip();
-        this.changeEvent('changed');
+        this.changeEvent('changed', event);
     };
     Slider.prototype.hover = function (event) {
         if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(event)) {
@@ -43884,7 +44039,7 @@ var Slider = /** @class */ (function (_super) {
             element.parentNode.removeChild(element);
         }
     };
-    Slider.prototype.changeSliderType = function (type) {
+    Slider.prototype.changeSliderType = function (type, args) {
         if (this.isMaterialTooltip && this.materialHandle) {
             this.sliderContainer.classList.remove(classNames.materialSlider);
             this.removeElement(this.materialHandle);
@@ -43939,7 +44094,10 @@ var Slider = /** @class */ (function (_super) {
             this.renderTooltip();
             this.wireMaterialTooltipEvent(false);
         }
-        this.updateConfig();
+        this.setBarColor();
+        if ((!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && !this.isServerRendered) || args !== 'tooltip') {
+            this.updateConfig();
+        }
     };
     Slider.prototype.changeRtl = function () {
         if (!this.enableRtl && this.type === 'Range') {
@@ -43956,13 +44114,15 @@ var Slider = /** @class */ (function (_super) {
         }
     };
     Slider.prototype.changeOrientation = function () {
-        this.changeSliderType(this.type);
+        this.changeSliderType(this.type, 'null');
     };
     Slider.prototype.updateConfig = function () {
         this.setEnableRTL();
         this.setValue();
         if (this.tooltip.isVisible) {
-            this.refreshTooltip(this.tooltipTarget);
+            if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])()) {
+                this.refreshTooltip(this.tooltipTarget);
+            }
         }
         if (this.ticks.placement !== 'None') {
             if (this.ul) {
@@ -44002,8 +44162,8 @@ var Slider = /** @class */ (function (_super) {
         return this.addOnPersist(keyEntity);
     };
     /**
-     * Prepares the slider for safe removal from the DOM.
-     * Detaches all event handlers, attributes, and classes to avoid memory leaks.
+     * Removes the component from the DOM and detaches all its related event handlers.
+     * Also it removes the attributes and classes.
      * @method destroy
      * @return {void}
      */
@@ -44016,12 +44176,19 @@ var Slider = /** @class */ (function (_super) {
         if (this.type === 'Range') {
             this.secondHandle.removeAttribute('aria-orientation');
         }
-        this.sliderContainer.parentNode.insertBefore(this.element, this.sliderContainer);
-        Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["detach"])(this.sliderContainer);
+        if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && !this.isServerRendered) {
+            this.sliderContainer.parentNode.insertBefore(this.element, this.sliderContainer);
+            Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["detach"])(this.sliderContainer);
+        }
         if (this.tooltip.isVisible) {
             this.tooltipObj.destroy();
         }
-        this.element.innerHTML = '';
+        if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && this.isMaterialTooltip && !Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(this.materialHandle)) {
+            this.materialHandle.remove();
+        }
+        if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && !this.isServerRendered) {
+            this.element.innerHTML = '';
+        }
     };
     /**
      * Calls internally if any of the property value is changed.
@@ -44043,7 +44210,9 @@ var Slider = /** @class */ (function (_super) {
                         this.setProperties({ 'value': value }, true);
                         if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(oldProp.value) && oldProp.value.toString() !== value.toString()) {
                             this.setValue();
-                            this.refreshTooltip(this.tooltipTarget);
+                            if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() || !this.isServerRendered) {
+                                this.refreshTooltip(this.tooltipTarget);
+                            }
                             if (this.type === 'Range') {
                                 if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(newProp.value) || oldProp.value[1] === value[1]) {
                                     this.activeHandle = 1;
@@ -44058,35 +44227,70 @@ var Slider = /** @class */ (function (_super) {
                 case 'min':
                 case 'step':
                 case 'max':
+                    if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && this.isServerRendered) {
+                        this.isServerRendered = false;
+                    }
                     this.setMinMaxValue();
+                    if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && !this.isServerRendered) {
+                        this.isServerRendered = true;
+                    }
                     break;
                 case 'tooltip':
+                    if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && this.isServerRendered) {
+                        this.isServerRendered = false;
+                    }
                     if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(newProp.tooltip) && !Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(oldProp.tooltip)) {
-                        this.setTooltip();
+                        this.setTooltip(prop);
+                    }
+                    if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && !this.isServerRendered) {
+                        this.isServerRendered = true;
                     }
                     break;
                 case 'type':
+                    if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && this.isServerRendered) {
+                        this.isServerRendered = false;
+                    }
                     if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(oldProp) && Object.keys(oldProp).length
                         && !Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(oldProp.type)) {
-                        this.changeSliderType(oldProp.type);
+                        this.changeSliderType(oldProp.type, prop);
                         this.setZindex();
+                    }
+                    if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && !this.isServerRendered) {
+                        this.isServerRendered = true;
                     }
                     break;
                 case 'enableRtl':
+                    if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && this.isServerRendered) {
+                        if (this.isMaterialTooltip) {
+                            this.sliderContainer.classList.add(classNames.materialSlider);
+                        }
+                        this.isServerRendered = false;
+                    }
                     if (oldProp.enableRtl !== newProp.enableRtl && this.orientation !== 'Vertical') {
                         this.rtl = oldProp.enableRtl;
                         this.changeRtl();
+                    }
+                    if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && !this.isServerRendered) {
+                        this.isServerRendered = true;
                     }
                     break;
                 case 'limits':
                     this.limitsPropertyChange();
                     break;
                 case 'orientation':
+                    if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && this.isServerRendered) {
+                        this.isServerRendered = false;
+                    }
                     this.changeOrientation();
+                    if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && !this.isServerRendered) {
+                        this.isServerRendered = true;
+                    }
                     break;
                 case 'ticks':
                     if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(this.sliderContainer.querySelector('.' + classNames.scale))) {
-                        Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["detach"])(this.ul);
+                        if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() || !this.isServerRendered) {
+                            Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["detach"])(this.ul);
+                        }
                         Array.prototype.forEach.call(this.sliderContainer.classList, function (className) {
                             if (className.match(/e-scale-/)) {
                                 _this.sliderContainer.classList.remove(className);
@@ -44112,28 +44316,64 @@ var Slider = /** @class */ (function (_super) {
                         }
                     }
                     else {
-                        if (this.firstBtn && this.secondBtn) {
-                            this.sliderContainer.removeChild(this.firstBtn);
-                            this.sliderContainer.removeChild(this.secondBtn);
-                            this.sliderContainer.classList.remove(classNames.sliderButtonClass);
-                            this.firstBtn = undefined;
-                            this.secondBtn = undefined;
-                            this.reposition();
+                        if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() || !this.isServerRendered) {
+                            if (this.firstBtn && this.secondBtn) {
+                                this.sliderContainer.removeChild(this.firstBtn);
+                                this.sliderContainer.removeChild(this.secondBtn);
+                                this.sliderContainer.classList.remove(classNames.sliderButtonClass);
+                                this.firstBtn = undefined;
+                                this.secondBtn = undefined;
+                                this.reposition();
+                            }
+                        }
+                    }
+                    if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && this.isServerRendered) {
+                        if (this.isMaterialTooltip) {
+                            this.sliderContainer.classList.add(classNames.materialSlider);
                         }
                     }
                     break;
                 case 'enabled':
                     this.setEnabled();
+                    if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && this.isServerRendered) {
+                        if (this.isMaterialTooltip) {
+                            this.sliderContainer.classList.add(classNames.materialSlider);
+                        }
+                    }
                     break;
                 case 'readonly':
                     this.setReadOnly();
+                    if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && this.isServerRendered) {
+                        if (this.isMaterialTooltip) {
+                            this.sliderContainer.classList.add(classNames.materialSlider);
+                        }
+                    }
                     break;
                 case 'customValues':
+                    if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && this.isServerRendered) {
+                        this.isServerRendered = false;
+                    }
                     this.setValue();
                     this.reposition();
+                    if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && !this.isServerRendered) {
+                        this.isServerRendered = true;
+                    }
                     break;
                 case 'colorRange':
+                    if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && this.isServerRendered) {
+                        this.isServerRendered = false;
+                    }
                     this.reposition();
+                    if (Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() && !this.isServerRendered) {
+                        this.isServerRendered = true;
+                    }
+                    break;
+                case 'width':
+                    this.setElementWidth(newProp.width);
+                    this.setMinMaxValue();
+                    if (this.limits) {
+                        this.limitsPropertyChange();
+                    }
                     break;
             }
         }
@@ -44151,7 +44391,9 @@ var Slider = /** @class */ (function (_super) {
     Slider.prototype.setMinMaxValue = function () {
         var _this = this;
         this.setValue();
-        this.refreshTooltip(this.tooltipTarget);
+        if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])()) {
+            this.refreshTooltip(this.tooltipTarget);
+        }
         if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(this.sliderContainer.querySelector('.' + classNames.scale))) {
             if (this.ul) {
                 Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["detach"])(this.ul);
@@ -44181,8 +44423,8 @@ var Slider = /** @class */ (function (_super) {
             this.secondHandle.style.zIndex = (this.zIndex + 4) + '';
         }
     };
-    Slider.prototype.setTooltip = function () {
-        this.changeSliderType(this.type);
+    Slider.prototype.setTooltip = function (args) {
+        this.changeSliderType(this.type, args);
     };
     Slider.prototype.setBarColor = function () {
         var trackPosition;
@@ -44250,6 +44492,9 @@ var Slider = /** @class */ (function (_super) {
     __decorate([
         Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["Property"])(1)
     ], Slider.prototype, "step", void 0);
+    __decorate([
+        Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["Property"])(null)
+    ], Slider.prototype, "width", void 0);
     __decorate([
         Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["Property"])(0)
     ], Slider.prototype, "min", void 0);
@@ -49221,7 +49466,7 @@ var Crud = /** @class */ (function () {
     function Crud(parent) {
         this.parent = parent;
     }
-    Crud.prototype.addCard = function (cardData) {
+    Crud.prototype.addCard = function (cardData, index) {
         var _this = this;
         var args = {
             cancel: false, requestType: 'cardCreate', addedRecords: (cardData instanceof Array) ? cardData : [cardData],
@@ -49229,16 +49474,17 @@ var Crud = /** @class */ (function () {
         };
         this.parent.trigger(_base_constant__WEBPACK_IMPORTED_MODULE_1__["actionBegin"], args, function (addArgs) {
             if (!addArgs.cancel) {
+                var kanbanObj = _this.parent.isExternalDrop ? _this.parent.externalDropObj : _this.parent;
                 var modifiedData = [];
-                if (_this.parent.sortSettings.field && _this.parent.sortSettings.sortBy === 'Index') {
+                if (kanbanObj.sortSettings.field && kanbanObj.sortSettings.sortBy === 'Index') {
                     cardData instanceof Array ? modifiedData = cardData : modifiedData.push(cardData);
-                    modifiedData = _this.priorityOrder(modifiedData, addArgs);
+                    modifiedData = _this.priorityOrder(modifiedData, addArgs, index);
                 }
                 var addedRecords = (cardData instanceof Array) ? cardData : [cardData];
-                var changedRecords = (_this.parent.sortSettings.field && _this.parent.sortSettings.sortBy === 'Index') ? modifiedData : [];
+                var changedRecords = (kanbanObj.sortSettings.field && kanbanObj.sortSettings.sortBy === 'Index') ? modifiedData : [];
                 var editParms = { addedRecords: addedRecords, changedRecords: changedRecords, deletedRecords: [] };
                 var type = (cardData instanceof Array || modifiedData.length > 0) ? 'batch' : 'insert';
-                _this.parent.dataModule.updateDataManager(type, editParms, 'cardCreated', cardData);
+                _this.parent.dataModule.updateDataManager(type, editParms, 'cardCreated', cardData, index);
             }
         });
     };
@@ -49927,7 +50173,7 @@ var DragAndDrop = /** @class */ (function () {
                             this.dragObj.pageY;
                         var height = target.classList.contains(_base_css_constant__WEBPACK_IMPORTED_MODULE_1__["DRAGGED_CLONE_CLASS"]) ? target.offsetHeight :
                             (target.offsetHeight / 2);
-                        if ((pageY - (this.parent.element.getBoundingClientRect().top + target.offsetTop)) < height) {
+                        if ((pageY - (this.kanbanObj.element.getBoundingClientRect().top + target.offsetTop)) < height) {
                             insertClone = 'beforebegin';
                         }
                     }
@@ -50131,9 +50377,12 @@ var DragAndDrop = /** @class */ (function () {
             else {
                 this.dragObj.selectedCards.forEach(function (element) { _this.updateDroppedData(element, cardStatus_1, contentCell); });
             }
-            if (this.parent.sortSettings.field && this.parent.sortSettings.sortBy === 'Index') {
+            if (this.kanbanObj.sortSettings.field && this.kanbanObj.sortSettings.sortBy === 'Index') {
                 this.changeOrder(this.dragObj.modifiedData);
             }
+        }
+        if (this.dragObj.modifiedData.length === 0) {
+            this.dragObj.modifiedData = this.dragObj.cardDetails;
         }
         var dragArgs = {
             cancel: false, data: this.dragObj.modifiedData, event: e, element: this.dragObj.selectedCards,
@@ -50143,7 +50392,7 @@ var DragAndDrop = /** @class */ (function () {
             _this.removeElement(_this.dragObj.draggedClone);
             _this.removeElement(_this.dragObj.targetClone, _this.kanbanObj);
             _this.removeElement(_this.dragObj.cloneElement);
-            var dragMultiClone = [].slice.call(_this.kanbanObj.element.querySelectorAll('.' + _base_css_constant__WEBPACK_IMPORTED_MODULE_1__["DRAGGED_CLONE_CLASS"]));
+            var dragMultiClone = [].slice.call(_this.parent.element.querySelectorAll('.' + _base_css_constant__WEBPACK_IMPORTED_MODULE_1__["DRAGGED_CLONE_CLASS"]));
             dragMultiClone.forEach(function (clone) { Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["remove"])(clone); });
             _this.dragObj.element.style.removeProperty('width');
             _this.multiCloneRemove();
@@ -50171,7 +50420,10 @@ var DragAndDrop = /** @class */ (function () {
                         dragEventArgs.data[0];
                     if (_this.parent.isExternalDrop) {
                         _this.parent.crudModule.deleteCard(updateCard);
-                        _this.kanbanObj.crudModule.addCard(updateCard);
+                        (updateCard instanceof Array) ? updateCard.forEach(function (card, index) {
+                            return _this.changeId(card, index + 1);
+                        }) : _this.changeId(updateCard, 1);
+                        _this.kanbanObj.crudModule.addCard(updateCard, dragEventArgs.dropIndex);
                     }
                     else {
                         _this.parent.crudModule.updateCard(updateCard, dragEventArgs.dropIndex);
@@ -50186,6 +50438,15 @@ var DragAndDrop = /** @class */ (function () {
             _this.parent.isExternalDrop = false;
             _this.parent.externalDropObj = null;
         });
+    };
+    DragAndDrop.prototype.changeId = function (card, increase) {
+        var _this = this;
+        var index = (this.kanbanObj.kanbanData).findIndex(function (colData) {
+            return colData[_this.kanbanObj.cardSettings.headerField] === card[_this.kanbanObj.cardSettings.headerField];
+        });
+        if (index !== -1) {
+            card[this.kanbanObj.cardSettings.headerField] = Math.max.apply(Math, this.kanbanObj.kanbanData.map(function (obj) { return parseInt(obj[_this.kanbanObj.cardSettings.headerField], 10); })) + increase;
+        }
     };
     DragAndDrop.prototype.updateDroppedData = function (element, cardStatus, contentCell) {
         var crudObj = this.parent.getCardDetails(element);
@@ -51451,7 +51712,7 @@ var Data = /** @class */ (function () {
      * @return {void}
      * @private
      */
-    Data.prototype.refreshUI = function (args, index) {
+    Data.prototype.refreshUI = function (args, position) {
         var _this = this;
         var kanbanObj = this.parent.isExternalDrop ? (args.requestType !== 'cardRemoved'
             ? this.parent.externalDropObj : this.parent) : this.parent;
@@ -51459,15 +51720,15 @@ var Data = /** @class */ (function () {
         if (kanbanObj.swimlaneSettings.keyField) {
             kanbanObj.layoutModule.swimlaneData = kanbanObj.layoutModule.getSwimlaneCards();
         }
-        args.addedRecords.forEach(function (data) {
-            kanbanObj.layoutModule.renderCardBasedOnIndex(data);
+        args.addedRecords.forEach(function (data, index) {
+            kanbanObj.layoutModule.renderCardBasedOnIndex(data, position + index);
         });
         args.changedRecords.forEach(function (data) {
             kanbanObj.layoutModule.removeCard(data);
-            kanbanObj.layoutModule.renderCardBasedOnIndex(data, index);
+            kanbanObj.layoutModule.renderCardBasedOnIndex(data, position);
             if (kanbanObj.sortSettings.field && kanbanObj.sortSettings.sortBy === 'Index'
-                && kanbanObj.sortSettings.direction === 'Descending' && index > 0) {
-                --index;
+                && kanbanObj.sortSettings.direction === 'Descending' && position > 0) {
+                --position;
             }
         });
         args.deletedRecords.forEach(function (data) {
@@ -51581,7 +51842,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -52205,7 +52466,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -53361,7 +53622,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -53431,7 +53692,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -53513,7 +53774,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -53568,7 +53829,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -53623,7 +53884,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -53675,7 +53936,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -58787,7 +59048,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -60233,7 +60494,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -60785,7 +61046,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -61293,9 +61554,9 @@ var MenuBase = /** @class */ (function (_super) {
             var sli = void 0;
             var ul_1;
             var item_1;
-            var items_1;
-            var beforeCloseArgs = void 0;
             var wrapper = this.getWrapper();
+            var beforeCloseArgs = void 0;
+            var items_1;
             var popups = this.getPopups();
             var isClose = false;
             var cnt = this.isMenu ? popups.length + 1 : wrapper.childElementCount;
@@ -61313,7 +61574,7 @@ var MenuBase = /** @class */ (function (_super) {
                 item_1 = this.navIdx.length ? this.getItem(this.navIdx) : null;
                 items_1 = item_1 ? item_1.items : this.items;
                 beforeCloseArgs = { element: ul_1, parentItem: this.isMenu && Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isBlazor"])() ? this.getMenuItemModel(item_1, ulIndex) : item_1,
-                    items: items_1, event: e, cancel: false };
+                    items: items_1, event: e, cancel: false, liElement: liElem_1 };
                 this.trigger('beforeClose', beforeCloseArgs, function (observedCloseArgs) {
                     var popupEle;
                     var closeArgs;
@@ -61363,10 +61624,11 @@ var MenuBase = /** @class */ (function (_super) {
                         _this.afterCloseMenu(e);
                     }
                     else if (isOpen && !_this.hamburgerMode && _this.navIdx.length && closedLi && !trgtLi) {
-                        var ele = e ? Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["closest"])(e.target, '.e-menu-wrapper') : null;
+                        var ele = (e && e.target.classList.contains('e-vscroll'))
+                            ? Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["closest"])(e.target, '.e-menu-wrapper') : null;
                         if (ele) {
                             ele = ele.querySelector('.e-menu-item');
-                            if (ele && _this.getIndex(ele.id, true).length <= _this.navIdx.length) {
+                            if (_this.showItemOnClick || (ele && _this.getIndex(ele.id, true).length <= _this.navIdx.length)) {
                                 _this.closeMenu(_this.navIdx[_this.navIdx.length - 1], e, true);
                             }
                         }
@@ -61399,7 +61661,7 @@ var MenuBase = /** @class */ (function (_super) {
                             if (sli_1) {
                                 sli_1.setAttribute('aria-expanded', 'false');
                                 sli_1.classList.remove(SELECTED);
-                                if (liElem_1) {
+                                if (observedCloseArgs.liElement) {
                                     sli_1.classList.add(FOCUSED);
                                     sli_1.focus();
                                 }
@@ -63041,7 +63303,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -63509,7 +63771,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -63766,7 +64028,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -64073,7 +64335,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -64824,7 +65086,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -66040,7 +66302,7 @@ var Tab = /** @class */ (function (_super) {
                 }
             }
             else if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(trgParent) && (trgIndex !== this.selectedItem || trgIndex !== this.prevIndex)) {
-                this.select(trgIndex);
+                this.select(trgIndex, args.originalEvent);
             }
         }
     };
@@ -66401,9 +66663,6 @@ var Tab = /** @class */ (function (_super) {
                     return;
                 }
                 // tslint:disable-next-line:no-any
-                if (_this.isRect) {
-                    _this.clearTemplate([], index);
-                }
                 _this.tbObj.removeItems(index);
                 _this.items.splice(index, 1);
                 _this.itemIndexArray.splice(index, 1);
@@ -66411,9 +66670,6 @@ var Tab = /** @class */ (function (_super) {
                 var cntTrg = Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["select"])('#' + CLS_CONTENT + _this.tabId + '_' + _this.extIndex(trg.id), Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["select"])('.' + CLS_CONTENT, _this.element));
                 if (!Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["isNullOrUndefined"])(cntTrg)) {
                     // tslint:disable-next-line:no-any
-                    if (_this.isReact) {
-                        _this.clearTemplate();
-                    }
                     Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["detach"])(cntTrg);
                 }
                 _this.trigger('removed', tabRemovingArgs);
@@ -66499,7 +66755,7 @@ var Tab = /** @class */ (function (_super) {
      * @param  {number | HTMLElement} args - Index or DOM element is used for selecting an item from the Tab.
      * @returns void.
      */
-    Tab.prototype.select = function (args) {
+    Tab.prototype.select = function (args, event) {
         var _this = this;
         var tabHeader = this.getTabHeader();
         this.tbItems = Object(_syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["select"])('.' + CLS_TB_ITEMS, tabHeader);
@@ -66523,6 +66779,7 @@ var Tab = /** @class */ (function (_super) {
             this.prevItem.children.item(0).setAttribute('tabindex', '-1');
         }
         var eventArg = {
+            event: event,
             previousItem: this.prevItem,
             previousIndex: this.prevIndex,
             selectedItem: this.tbItem[this.selectedItem],
@@ -66900,7 +67157,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -69186,7 +69443,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -79107,6 +79364,9 @@ var Tooltip = /** @class */ (function (_super) {
             }
             if (this.openDelay > 0) {
                 var show = function () {
+                    if (_this.mouseTrail) {
+                        _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].add(target, 'mousemove touchstart mouseenter', _this.onMouseMove, _this);
+                    }
                     if (_this.popupObj) {
                         _this.popupObj.show(openAnimation_1, target);
                     }
@@ -79485,7 +79745,7 @@ var Tooltip = /** @class */ (function (_super) {
                     _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].add(this.tooltipEle, 'mouseleave', this.tooltipMouseOut, this);
                 }
             }
-            if (this.mouseTrail) {
+            if (this.mouseTrail && this.openDelay === 0) {
                 _syncfusion_ej2_base__WEBPACK_IMPORTED_MODULE_0__["EventHandler"].add(target, 'mousemove touchstart mouseenter', this.onMouseMove, this);
             }
         }
@@ -81900,8 +82160,12 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     });
     kanbanObj1.appendTo('#kanban1');
     function generateKanbanData(count, kanban) {
-        if (count === void 0) { count = 100; }
-        if (kanban === void 0) { kanban = ''; }
+        if (count === void 0) {
+            count = 100;
+        }
+        if (kanban === void 0) {
+            kanban = '';
+        }
         var kanbanData = [];
         var names = [
             'Analyze the new requirements gathered from the customer', 'Improve application performance',
