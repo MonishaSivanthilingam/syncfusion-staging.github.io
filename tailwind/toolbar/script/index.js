@@ -63774,11 +63774,15 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         }
     };
     document.getElementById('btn_touch').onclick = function (e) {
-        document.getElementsByTagName('body')[0].classList.add('e-bigger');
+        e.target.classList.add("btn-primary");
+        document.getElementById('btn_mouse').classList.remove("btn-primary");
+        document.querySelector("body").classList.add('e-bigger');
         refreshToolbars();
     };
     document.getElementById('btn_mouse').onclick = function (e) {
-        document.getElementsByClassName('e-bigger')[0].classList.remove('e-bigger');
+        e.target.classList.add("btn-primary");
+        document.getElementById('btn_touch').classList.remove("btn-primary");
+        document.querySelector("body").classList.remove('e-bigger');
         refreshToolbars();
     };
     document.getElementById('themechange').onchange = function () {
