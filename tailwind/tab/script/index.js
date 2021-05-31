@@ -63750,11 +63750,11 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     });
     tabObj.appendTo('#ej2Tab');
     document.getElementById('btn_touch').onclick = function (e) {
-        document.getElementsByTagName('body')[0].classList.add('e-bigger');
+        document.querySelector('body').classList.add('e-bigger');
         tabObj.refresh();
     };
     document.getElementById('btn_mouse').onclick = function (e) {
-        document.getElementsByClassName('e-bigger')[0].classList.remove('e-bigger');
+        document.querySelector('body').classList.remove('e-bigger');
         tabObj.refresh();
     };
     document.getElementById('btn_high').onclick = function (e) {
@@ -63776,30 +63776,15 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         document.getElementsByTagName('link')[1].href = './theme-files/tailwind.css';
     };
     document.getElementById('btn_closeButton').onclick = function (e) {
-        if (tabObj.showCloseButton) {
-            tabObj.showCloseButton = false;
-        }
-        else {
-            tabObj.showCloseButton = true;
-        }
+        tabObj.showCloseButton = !tabObj.showCloseButton;
         tabObj.dataBind();
     };
     document.getElementById('btn_enableRtl').onclick = function (e) {
-        if (tabObj.enableRtl) {
-            tabObj.enableRtl = false;
-        }
-        else {
-            tabObj.enableRtl = true;
-        }
+        tabObj.enableRtl = !tabObj.enableRtl;
         tabObj.dataBind();
     };
     document.getElementById('btn_orientation').onclick = function (e) {
-        if (tabObj.headerPlacement == 'Top') {
-            tabObj.headerPlacement = 'Bottom';
-        }
-        else {
-            tabObj.headerPlacement = 'Top';
-        }
+        tabObj.headerPlacement = tabObj.headerPlacement == 'Top' ? 'Bottom' : 'Top';
         tabObj.dataBind();
     };
     document.getElementById('btn_default').onclick = function (e) {
@@ -63808,22 +63793,22 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     };
     document.getElementById('btn_fill').onclick = function (e) {
         removeClass();
-        document.getElementsByClassName('e-tab')[0].classList.add('e-fill');
+        document.querySelector('.e-tab').classList.add('e-fill');
         tabObj.dataBind();
     };
     document.getElementById('btn_bg').onclick = function (e) {
         removeClass();
-        document.getElementsByClassName('e-tab')[0].classList.add('e-background');
+        document.querySelector('.e-tab').classList.add('e-background');
         tabObj.dataBind();
     };
     document.getElementById('btn_accent').onclick = function (e) {
         removeClass();
-        document.getElementsByClassName('e-tab')[0].classList.add('e-background');
-        document.getElementsByClassName('e-tab')[0].classList.add('e-accent');
+        document.querySelector('.e-tab').classList.add('e-background');
+        document.querySelector('.e-tab').classList.add('e-accent');
         tabObj.dataBind();
     };
     function removeClass() {
-        var ele = document.getElementsByClassName('e-tab')[0];
+        var ele = document.querySelector('.e-tab');
         ele.classList.remove('e-fill');
         ele.classList.remove('e-background');
         ele.classList.remove('e-accent');
