@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Tailwind Theme</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/base/tailwind.css" />
+    <link rel="stylesheet" href="./css/buttons/tailwind.css" />
+    <link rel="stylesheet" href="./css/calendar/tailwind.css" />
+    <link rel="stylesheet" href="./css/ddl/tailwind.css" />
+    <link rel="stylesheet" href="./css/navigation/tailwind.css" />
+    <link rel="stylesheet" href="./css/popups/tailwind.css" />
+    <link rel="stylesheet" href="./css/input/tailwind.css" />
+    <link rel="stylesheet" href="./css/schedule/tailwind.css" />
+
+  <style>
+    html,
+    body {
+      height: 100vh;
+      margin: 0;
+      overflow: auto;
+      padding: 0;
+      width: 100vw;
+    }
+
+    .templatewrap img {
+      height: 24px;
+    }
+  </style>
+</head>
+
+<body class="e-css">
+  <div class="container-fluid px-0 py-0">
+    <div class="row mx-3 my-3">
+      <div class="col-md-9">
+        <div id="schedule"></div>
+      </div>
+      <div class="col-md-3 properties">
+        <div class="row mb-3">
+          <div class="col-md-10">
+            <div class="form-check">
+              <label class="form-check-label">
+                <input id="isGrouping" class="form-check-input" type="checkbox">
+                Grouping
+              </label>
+            </div>
+          </div>
+        </div>
+ 
+        <div class="row mb-3">
+          <div class="col-md-10">
+            <div class="form-check">
+              <label class="form-check-label">
+                <input id="enableRtl" class="form-check-input" type="checkbox">
+                Enable RTL
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./script/index.js" type="text/javascript"></script>
+</body>
+
+</html>
