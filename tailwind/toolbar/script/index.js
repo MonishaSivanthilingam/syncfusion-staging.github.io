@@ -63785,15 +63785,14 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         document.querySelector("body").classList.remove('e-bigger');
         refreshToolbars();
     };
-    document.getElementById('themechange').onchange = function () {
-        var ddl = document.getElementById('themechange');
+    document.getElementById('themechange').onchange = function (e) {
         var links = [].slice.call(document.getElementsByTagName('link'));
-        for (var _i = 0, links_1 = links; _i < links_1.length; _i++) {
-            var link = links_1[_i];
-            var hrefValue = link.getAttribute('href');
-            if (hrefValue.indexOf('./theme-files/') !== -1) {
-                var currentTheme = hrefValue.split('/').pop().split('.')[0];
-                link.setAttribute('href', hrefValue.replace(currentTheme, ddl.value));
+        for (var a = 1; a < links.length; a++) {
+            var link = links[a];
+            if (e.target.value === 'tailwind') {
+                link.href = link.href.replace('tailwind-dark.css', 'tailwind.css');
+            } else {
+                link.href = link.href.replace('tailwind.css', 'tailwind-dark.css');
             }
         }
     };

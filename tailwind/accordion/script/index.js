@@ -63701,11 +63701,38 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     document.getElementById('btn_material').onclick = function (e) {
         document.getElementsByTagName('link')[1].href = './theme-files/material.css';
     };
-    document.getElementById('btn_taildark').onclick = function (e) {
-        document.getElementsByTagName('link')[1].href = './theme-files/tailwind-dark.css';
-    };
-    document.getElementById('btn_tail').onclick = function (e) {
-        document.getElementsByTagName('link')[1].href = './theme-files/tailwind.css';
+    // document.getElementById('btn_taildark').onclick = function (e) {
+    //     var links = [].slice.call(document.getElementsByTagName('link'));
+    //     for (var a = 1; a < links.length; a++) {
+    //         var link = links[a];
+    //         if (e.target.value === 'tailwind') {
+    //             link.href = link.href.replace('tailwind-dark.css', 'tailwind.css');
+    //         } else {
+    //             link.href = link.href.replace('tailwind.css', 'tailwind-dark.css');
+    //         }
+    //     }
+    // };
+    // document.getElementById('btn_tail').onclick = function (e) {
+    //     var links = [].slice.call(document.getElementsByTagName('link'));
+    //     for (var a = 1; a < links.length; a++) {
+    //         var link = links[a];
+    //         if (e.target.value === 'tailwind-dark') {
+    //             link.href = link.href.replace('tailwind.css', 'tailwind-dark.css');
+    //         } else {
+    //             link.href = link.href.replace('tailwind-dark.css', 'tailwind.css');
+    //         }
+    //     }
+    // };
+    document.getElementById('themechange').onchange = function (e) {
+        var links = [].slice.call(document.getElementsByTagName('link'));
+        for (var a = 1; a < links.length; a++) {
+            var link = links[a];
+            if (e.target.value === 'tailwind') {
+                link.href = link.href.replace('tailwind-dark.css', 'tailwind.css');
+            } else {
+                link.href = link.href.replace('tailwind.css', 'tailwind-dark.css');
+            }
+        }
     };
     document.getElementById('btn_enableRtl').onclick = function (e) {
         accordion.enableRtl = !accordion.enableRtl;

@@ -6,7 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tab - Tailwind theme</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="./theme-files/tailwind.css" rel="stylesheet">
+    <!-- <link href="./theme-files/tailwind.css" rel="stylesheet"> -->
+
+    <link rel="stylesheet" href="./theme-files/base/tailwind.css" />
+    <link rel="stylesheet" href="./theme-files/buttons/tailwind.css" />
+    <link rel="stylesheet" href="./theme-files/popups/tailwind.css" />
+    <link rel="stylesheet" href="./theme-files/hscroll/tailwind.css" />
+    <link rel="stylesheet" href="./theme-files/toolbar/tailwind.css" />
+    <link rel="stylesheet" href="./theme-files/tab/tailwind.css" />
+    
+
     <link href="icons.css" rel="stylesheet">
     <style>
         .btn {
@@ -26,8 +35,15 @@
             <td> <button id="btn_fabric" class="btn btn-info">Fabric</button> </td>
             <td> <button id="btn_boot" class="btn btn-info">Bootstrap</button> </td>
             <td> <button id="btn_high" class="btn btn-info">HighContrast</button> </td>
-            <td> <button id="btn_tail" class="btn btn-info">Tailwind</button> </td>
-            <td> <button id="btn_taildark" class="btn btn-info">Tailwind Dark</button> </td>
+        </tr>
+        <tr>
+            <div class="col-4">Choose Theme</div>
+            <div class="col-8">
+              <select id="themechange" name="ddl" class="form-control">
+                <option value="tailwind" selected>Tailwind</option>
+                <option value="tailwind-dark">Tailwind Dark</option>
+              </select>
+            </div>
         </tr>
         <tr>
             <td> <button id="btn_closeButton" class="btn btn-info">ShowCloseButton</button></td>

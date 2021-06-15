@@ -6,7 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Toolbar - Tailwind theme</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="./theme-files/tailwind.css" rel="stylesheet">
+    <!-- <link href="./theme-files/tailwind.css" rel="stylesheet"> -->
+
+    <link rel="stylesheet" href="./theme-files/base/tailwind.css" />
+    <link rel="stylesheet" href="./theme-files/buttons/tailwind.css" />
+    <link rel="stylesheet" href="./theme-files/popups/tailwind.css" />
+    <link rel="stylesheet" href="./theme-files/hscroll/tailwind.css" />
+    <link rel="stylesheet" href="./theme-files/toolbar/tailwind.css" />
+
     <link href="icons.css" rel="stylesheet">
 </head>
 
@@ -48,15 +55,6 @@
                         <div class="col-4">Choose Theme</div>
                         <div class="col-8">
                             <select id="themechange" name="ddl" class="form-control">
-                                <option value="material">Material</option>
-                                <option value="fabric">Fabric</option>
-                                <option value="bootstrap">Bootstrap</option>
-                                <option value="highcontrast">High Contrast</option>
-                                <option value="material-dark">Material Dark</option>
-                                <option value="fabric-dark">Fabric Dark</option>
-                                <option value="bootstrap-dark">Bootstrap Dark</option>
-                                <option value="highcontrast-light">High Contrast Light</option>
-                                <option value="bootstrap4">Bootstrap 4</option>
                                 <option value="tailwind" selected>Tailwind</option>
                                 <option value="tailwind-dark">Tailwind Dark</option>
                             </select>
