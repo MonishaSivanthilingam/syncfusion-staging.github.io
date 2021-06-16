@@ -63665,7 +63665,7 @@ var Deferred = /** @class */ (function () {
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(/*! @syncfusion/ej2-navigations */ "./node_modules/@syncfusion/ej2-navigations/index.js"), __webpack_require__(/*! @syncfusion/ej2-base */ "./node_modules/@syncfusion/ej2-base/index.js")], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, ej2_navigations_1, ej2_base_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    ej2_base_1.enableRipple(true);
+    // //ej2_base_1.enableRipple(true);
     var tabObj = new ej2_navigations_1.Tab({
         heightAdjustMode: 'Auto',
         overflowMode: 'Popup',
