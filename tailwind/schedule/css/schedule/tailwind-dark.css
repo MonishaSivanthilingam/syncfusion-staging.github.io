@@ -262,7 +262,7 @@
 }
 
 .e-schedule .e-schedule-toolbar .e-toolbar-items .e-tbar-btn.e-btn.e-tbtn-txt .e-icons.e-icon-right.e-btn-icon.e-icon-down-arrow {
-  font-size: 10px;
+  font-size: 18px;
   padding-top: 0;
 }
 
@@ -301,7 +301,7 @@
 
 .e-schedule .e-schedule-toolbar .e-toolbar-items .e-toolbar-item.e-prev .e-icon-prev,
 .e-schedule .e-schedule-toolbar .e-toolbar-items .e-toolbar-item.e-next .e-icon-next {
-  font-size: 14px;
+  font-size: 18px;
 }
 
 .e-schedule .e-schedule-toolbar .e-toolbar-items .e-toolbar-item.e-separator {
@@ -337,6 +337,7 @@
 
 .e-schedule .e-schedule-toolbar .e-hor-nav {
   background: #374151;
+  font-size: 18px;
   border-left: 1px solid #4b5563;
 }
 
@@ -837,7 +838,7 @@
 
 .e-schedule .e-vertical-view.e-timescale-disable .e-appointment.e-appointment-border, .e-schedule .e-vertical-view.e-timescale-disable .e-appointment:focus {
   border: 0;
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .e-schedule .e-vertical-view.e-timescale-disable .e-appointment.e-allow-select {
@@ -1141,7 +1142,7 @@
 
 .e-schedule .e-vertical-view .e-all-day-appointment-wrapper .e-appointment.e-appointment-border, .e-schedule .e-vertical-view .e-all-day-appointment-wrapper .e-appointment:focus {
   border: 0;
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .e-schedule .e-vertical-view .e-day-wrapper .e-appointment:not(.e-schedule-event-clone) {
@@ -1228,7 +1229,7 @@
 
 .e-schedule .e-vertical-view .e-day-wrapper .e-appointment.e-appointment-border, .e-schedule .e-vertical-view .e-day-wrapper .e-appointment:focus {
   border: 0;
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .e-schedule .e-vertical-view.e-day-view .e-header-date {
@@ -1497,7 +1498,7 @@
 
 .e-schedule .e-month-view .e-appointment.e-appointment-border, .e-schedule .e-month-view .e-appointment:focus {
   border: 0;
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .e-schedule .e-month-view .e-appointment.e-allow-select {
@@ -1822,6 +1823,7 @@
   border-bottom: 1px solid #4b5563;
   border-right: 1px solid #4b5563;
   text-align: center;
+  color: #d1d5db;
 }
 
 .e-schedule .e-timeline-year-view .e-month-header.e-current-day {
@@ -1835,7 +1837,6 @@
   height: 34px;
   padding: 0;
   text-align: center;
-  padding: 8px;
 }
 
 .e-schedule .e-timeline-year-view .e-month-header,
@@ -1950,7 +1951,7 @@
 
 .e-schedule .e-timeline-year-view .e-event-table .e-appointment.e-appointment-border, .e-schedule .e-timeline-year-view .e-event-table .e-appointment:focus {
   border: 0;
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .e-schedule .e-timeline-year-view .e-event-table .e-appointment.e-allow-select {
@@ -2249,7 +2250,7 @@
 .e-schedule .e-timeline-month-view .e-appointment.e-appointment-border,
 .e-schedule .e-timeline-month-view .e-appointment:focus {
   border: 0;
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .e-schedule .e-timeline-view .e-appointment.e-allow-select,
@@ -2830,7 +2831,7 @@
 
 .e-bigger .e-schedule .e-schedule-toolbar .e-icon-down-arrow,
 .e-bigger.e-schedule .e-schedule-toolbar .e-icon-down-arrow {
-  font-size: 10px;
+  font-size: 18px;
 }
 
 .e-bigger .e-schedule .e-schedule-toolbar .e-schedule .e-toolbar .e-hor-nav,
@@ -2838,6 +2839,11 @@
   min-height: 54px;
   min-width: 32px;
   z-index: 0;
+}
+
+.e-bigger .e-schedule .e-schedule-toolbar .e-toolbar-item .e-btn.e-tbar-btn .e-icons.e-btn-icon,
+.e-bigger.e-schedule .e-schedule-toolbar .e-toolbar-item .e-btn.e-tbar-btn .e-icons.e-btn-icon {
+  font-size: 22px;
 }
 
 .e-bigger .e-schedule .e-schedule-toolbar .e-toolbar-item .e-tbar-btn-text,
@@ -2881,7 +2887,7 @@
   margin: 4px 0;
   min-height: 24px;
   min-width: 24px;
-  padding: 0 1.5px;
+  padding: 0 6px;
 }
 
 .e-bigger .e-schedule .e-schedule-toolbar .e-toolbar-items .e-toolbar-item button.e-btn.e-tbtn-txt .e-icons,
@@ -2903,6 +2909,11 @@
 .e-bigger.e-schedule .e-schedule-toolbar .e-toolbar-items .e-toolbar-item button.e-btn .e-btn-icon,
 .e-bigger.e-schedule .e-schedule-toolbar .e-toolbar-items .e-toolbar-item .e-tbar-btn.e-btn.e-control .e-btn-icon {
   height: 25px;
+}
+
+.e-bigger .e-schedule .e-schedule-toolbar .e-toolbar-items .e-toolbar-item .e-tbar-btn .e-tbar-btn-text,
+.e-bigger.e-schedule .e-schedule-toolbar .e-toolbar-items .e-toolbar-item .e-tbar-btn .e-tbar-btn-text {
+  font-size: 16px;
 }
 
 .e-bigger .e-schedule .e-more-popup-wrapper .e-header-day,
@@ -3042,15 +3053,6 @@
 
 .e-dialog.e-quick-dialog .e-quick-dialog-cancel {
   box-shadow: none;
-}
-
-.e-dialog.e-quick-dialog .e-dlg-header-content,
-.e-dialog.e-quick-dialog .e-dlg-content {
-  background-color: #1f2937;
-}
-
-.e-dialog.e-quick-dialog .e-footer-content {
-  background-color: #232e3e;
 }
 
 .e-dialog.e-quick-dialog.e-rtl {
@@ -3471,7 +3473,7 @@
 }
 
 .e-schedule-dialog.e-device .e-icon-down-arrow {
-  font-size: 10px;
+  font-size: 18px;
 }
 
 .e-schedule-dialog.e-device.e-rtl .e-save-icon {
@@ -3523,7 +3525,7 @@
 .e-quick-popup-wrapper {
   background-color: #1f2937;
   border-radius: 2px;
-  box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   color: #fff;
   max-width: 365px;
   min-width: 320px;
@@ -3533,7 +3535,6 @@
           user-select: none;
   width: 100%;
   border: 1px solid #4b5563;
-  box-shadow: none;
   border-radius: 6px;
 }
 
@@ -3999,7 +4000,7 @@
 .e-appointment.e-schedule-event-clone {
   background: #22d3ee;
   border-radius: 2px;
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   color: #000;
   display: -ms-flexbox;
   display: flex;
@@ -4115,7 +4116,7 @@
 
 .e-more-popup-wrapper .e-more-event-content .e-appointment-border {
   border: 0;
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .e-more-popup-wrapper .e-more-event-date-header {
@@ -4210,7 +4211,7 @@
 
 .e-more-popup-wrapper .e-appointment.e-appointment-border, .e-more-popup-wrapper .e-appointment:focus {
   border: 0;
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .e-more-popup-wrapper.e-device {
@@ -4254,6 +4255,11 @@
   border-style: solid;
   border-width: 0;
   position: relative;
+}
+
+.e-schedule .e-header-calendar {
+  background-color: #374151;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .e-schedule .e-vertical-view .e-date-header-wrap table tbody td:first-child,
