@@ -371,7 +371,7 @@ ej.gantt.Gantt.Inject(ej.gantt.Selection,ej.gantt.Edit,ej.gantt.VirtualScroll);
      });
     ganttChart.appendTo('#Editing');
 
-    ej.treegrid.TreeGrid.Inject( ej.treegrid.Edit,ej.treegrid.VirtualScroll,ej.treegrid.Page);
+ej.treegrid.TreeGrid.Inject( ej.treegrid.Edit,ej.treegrid.VirtualScroll,ej.treegrid.Page);
     var treegrid = new ej.treegrid.TreeGrid({
       dataSource: virtualData,
   idMapping: 'TaskID',
@@ -432,6 +432,12 @@ ej.gantt.Gantt.Inject(ej.gantt.Selection,ej.gantt.Edit,ej.gantt.VirtualScroll);
       edit: { params: { format: 'n' } },
     },
   ],
+  cellEdit: function (args) {
+      if(args.rowData.hasChildRecords && (args.columnName == "Duration" || args.columnName == "EndDate")) {
+            args.cancel = true;
+            alert("Parent record " +args.columnName +  " cannot be edited");
+      }
+  },
   actionComplete: function (args) {
     //updating the gantt
     if (args.type == 'save') {
