@@ -298,7 +298,8 @@ var tempData = [
 ];
 var virtualData = [];
 var projId = 1;
-for (var i = 0; i < 200; i++) {
+var counter = 0;
+for (var i = 0; i < 250; i++) {
     var x = virtualData.length + 1;
     var parent = {};
     /* tslint:disable:no-string-literal */
@@ -319,10 +320,11 @@ for (var i = 0; i < 200; i++) {
 	}
 
 
-ej.gantt.Gantt.Inject(ej.gantt.Selection,ej.gantt.Edit, ej.gantt.Toolbar, ej.gantt.DayMarkers);
+ej.gantt.Gantt.Inject(ej.gantt.Selection,ej.gantt.Edit,ej.gantt.VirtualScroll);
     var ganttChart = new ej.gantt.Gantt({
         dataSource: virtualData,
   dateFormat: 'MMM dd, y',
+  enableVirtualization: true,
   taskFields: {
     id: 'TaskID',
     name: 'TaskName',
@@ -330,7 +332,6 @@ ej.gantt.Gantt.Inject(ej.gantt.Selection,ej.gantt.Edit, ej.gantt.Toolbar, ej.gan
     endDate: 'EndDate',
     duration: 'Duration',
     progress: 'Progress',
-    dependency: 'Predecessor',
     parentID: 'parentID',
   },
   editSettings: {
@@ -348,8 +349,8 @@ ej.gantt.Gantt.Inject(ej.gantt.Selection,ej.gantt.Edit, ej.gantt.Toolbar, ej.gan
   labelSettings: {
     leftLabel: 'TaskName',
   },
-  projectStartDate: new Date('03/25/2019'),
-  projectEndDate: new Date('07/28/2019'),
+  projectStartDate: new Date('03/1/2019'),
+  projectEndDate: new Date('12/28/2019'),
   actionComplete: function (args) {
     if (args.requestType == 'save' && counter == 1) {
       //updating the treegrid with the modifiedRecords
@@ -363,17 +364,20 @@ ej.gantt.Gantt.Inject(ej.gantt.Selection,ej.gantt.Edit, ej.gantt.Toolbar, ej.gan
           EndDate: mRecords[i].EndDate,
         };
         treegrid.updateRow(mRecords[i].index, record);
+        counter = 0;
       }
     }
   },
      });
     ganttChart.appendTo('#Editing');
 
-
+    ej.treegrid.TreeGrid.Inject( ej.treegrid.Edit,ej.treegrid.VirtualScroll,ej.treegrid.Page);
     var treegrid = new ej.treegrid.TreeGrid({
       dataSource: virtualData,
   idMapping: 'TaskID',
   parentIdMapping: 'parentID',
+  allowPaging: true,
+  pageSettings:{pageSize: 15},
   treeColumnIndex: 1,
   height: 400,
   editSettings: {
@@ -439,7 +443,7 @@ ej.gantt.Gantt.Inject(ej.gantt.Selection,ej.gantt.Edit, ej.gantt.Toolbar, ej.gan
         Duration: args.data.Duration,
         Progress: args.data.Progress,
       };
-      gantt.updateRecordByID(data);
+      ganttChart.updateRecordByID(data);
     }
   }
     });
