@@ -363,7 +363,15 @@ ej.gantt.Gantt.Inject(ej.gantt.Selection,ej.gantt.Edit,ej.gantt.VirtualScroll);
           Progress: mRecords[i].Progress,
           EndDate: mRecords[i].EndDate,
         };
-        treegrid.updateRow(mRecords[i].index, record);
+        var grid=document.getElementsByClassName('e-grid')[0].ej2_instances[0];
+        for(var j=0;j<grid.getCurrentViewRecords().length;j++)
+        {
+            if(grid.getCurrentViewRecords()[j]['TaskID'] == mRecords[i]['TaskID']) {
+                var index = j;
+                break;
+            }
+        }
+        treegrid.updateRow(index, record);
         counter = 0;
       }
     }
