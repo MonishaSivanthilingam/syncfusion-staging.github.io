@@ -390,6 +390,15 @@ ej.gantt.Gantt.Inject(ej.gantt.Selection,ej.gantt.Edit,ej.gantt.VirtualScroll);
   labelSettings: {
     leftLabel: 'TaskName',
   },
+  columns: [
+    { field: 'TaskID', width: '150' },
+    { field: 'TaskName', width: '250' },
+    { field: 'StartDate', width: '250' },
+    { field: 'EndDate', width: '250' },
+    { field: 'Duration', width: '250' },
+    { field: 'Progress', width: '250' },
+    { field: 'Status', width: '250' }
+],
   projectStartDate: new Date('03/1/2019'),
   projectEndDate: new Date('12/28/2019'),
   actionComplete: function (args) {
@@ -397,12 +406,15 @@ ej.gantt.Gantt.Inject(ej.gantt.Selection,ej.gantt.Edit,ej.gantt.VirtualScroll);
       //updating the treegrid with the modifiedRecords
       mRecords = args.modifiedRecords;
       for (var i = 0; i < mRecords.length; i++) {
+          debugger;
         var record = {
+          TaskID: mRecords[i].TaskID,
           TaskName: mRecords[i].TaskName,
           StartDate: mRecords[i].StartDate,
           Duration: mRecords[i].Duration,
           Progress: mRecords[i].Progress,
           EndDate: mRecords[i].EndDate,
+          Status: mRecords[i].Status
         };
         var grid=document.getElementsByClassName('e-grid')[0].ej2_instances[0];
         for(var j=0;j<grid.getCurrentViewRecords().length;j++)
@@ -414,6 +426,7 @@ ej.gantt.Gantt.Inject(ej.gantt.Selection,ej.gantt.Edit,ej.gantt.VirtualScroll);
         }
         treegrid.updateRow(index, record);
         counter = 0;
+        kanbanObj.updateCard(record,record.TaskID -1);
       }
     }
   },
