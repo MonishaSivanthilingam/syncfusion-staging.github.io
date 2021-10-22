@@ -1,0 +1,222 @@
+{
+    "en": [
+        {
+            "displayName": "UTC -12: 00",
+            "timezoneValue": "Etc/GMT+12"
+        },
+        {
+            "displayName": "UTC -11: 00",
+            "timezoneValue": "Etc/GMT+11"
+        },
+        {
+            "displayName": "UTC -10: 00",
+            "timezoneValue": "Etc/GMT+10"
+        },
+        {
+            "displayName": "UTC -09: 00",
+            "timezoneValue": "Etc/GMT+9"
+        },
+        {
+            "displayName": "UTC -08: 00",
+            "timezoneValue": "Etc/GMT+8"
+        },
+        {
+            "displayName": "UTC -07: 00",
+            "timezoneValue": "Etc/GMT+7"
+        },
+        {
+            "displayName": "UTC -06: 00",
+            "timezoneValue": "Etc/GMT+6"
+        },
+        {
+            "displayName": "UTC -05: 00",
+            "timezoneValue": "Etc/GMT+5"
+        },
+        {
+            "displayName": "UTC -04: 00",
+            "timezoneValue": "Etc/GMT+4"
+        },
+        {
+            "displayName": "UTC -03: 00",
+            "timezoneValue": "Etc/GMT+3"
+        },
+        {
+            "displayName": "UTC -02: 00",
+            "timezoneValue": "Etc/GMT+2"
+        },
+        {
+            "displayName": "UTC -01: 00",
+            "timezoneValue": "Etc/GMT+1"
+        },
+        {
+            "displayName": "UTC +00: 00",
+            "timezoneValue": "Etc/GMT"
+        },
+        {
+            "displayName": "UTC +01: 00",
+            "timezoneValue": "Etc/GMT-1"
+        },
+        {
+            "displayName": "UTC +02: 00",
+            "timezoneValue": "Etc/GMT-2"
+        },
+        {
+            "displayName": "UTC +03: 00",
+            "timezoneValue": "Etc/GMT-3"
+        },
+        {
+            "displayName": "UTC +04: 00",
+            "timezoneValue": "Etc/GMT-4"
+        },
+        {
+            "displayName": "UTC +05: 00",
+            "timezoneValue": "Etc/GMT-5"
+        },
+        {
+            "displayName": "UTC +06: 00",
+            "timezoneValue": "Etc/GMT-6"
+        },
+        {
+            "displayName": "UTC +07: 00",
+            "timezoneValue": "Etc/GMT-7"
+        },
+        {
+            "displayName": "UTC +08: 00",
+            "timezoneValue": "Etc/GMT-8"
+        },
+        {
+            "displayName": "UTC +09: 00",
+            "timezoneValue": "Etc/GMT-9"
+        },
+        {
+            "displayName": "UTC +10: 00",
+            "timezoneValue": "Etc/GMT-10"
+        },
+        {
+            "displayName": "UTC +11: 00",
+            "timezoneValue": "Etc/GMT-11"
+        },
+        {
+            "displayName": "UTC +12: 00",
+            "timezoneValue": "Etc/GMT-12"
+        },
+        {
+            "displayName": "UTC +13: 00",
+            "timezoneValue": "Etc/GMT-13"
+        },
+        {
+            "displayName": "UTC +14: 00",
+            "timezoneValue": "Etc/GMT-14"
+        }
+    ],
+    "fr-CH": [
+        {
+            "displayName": "fuseau horaire -12: 00",
+            "timezoneValue": "Etc/GMT+12"
+        },
+        {
+            "displayName": "fuseau horaire -11: 00",
+            "timezoneValue": "Etc/GMT+11"
+        },
+        {
+            "displayName": "fuseau horaire -10: 00",
+            "timezoneValue": "Etc/GMT+10"
+        },
+        {
+            "displayName": "fuseau horaire -09: 00",
+            "timezoneValue": "Etc/GMT+9"
+        },
+        {
+            "displayName": "fuseau horaire -08: 00",
+            "timezoneValue": "Etc/GMT+8"
+        },
+        {
+            "displayName": "fuseau horaire -07: 00",
+            "timezoneValue": "Etc/GMT+7"
+        },
+        {
+            "displayName": "fuseau horaire -06: 00",
+            "timezoneValue": "Etc/GMT+6"
+        },
+        {
+            "displayName": "fuseau horaire -05: 00",
+            "timezoneValue": "Etc/GMT+5"
+        },
+        {
+            "displayName": "fuseau horaire -04: 00",
+            "timezoneValue": "Etc/GMT+4"
+        },
+        {
+            "displayName": "fuseau horaire -03: 00",
+            "timezoneValue": "Etc/GMT+3"
+        },
+        {
+            "displayName": "fuseau horaire -02: 00",
+            "timezoneValue": "Etc/GMT+2"
+        },
+        {
+            "displayName": "fuseau horaire -01: 00",
+            "timezoneValue": "Etc/GMT+1"
+        },
+        {
+            "displayName": "fuseau horaire +00: 00",
+            "timezoneValue": "Etc/GMT"
+        },
+        {
+            "displayName": "fuseau horaire +01: 00",
+            "timezoneValue": "Etc/GMT-1"
+        },
+        {
+            "displayName": "fuseau horaire +02: 00",
+            "timezoneValue": "Etc/GMT-2"
+        },
+        {
+            "displayName": "fuseau horaire +03: 00",
+            "timezoneValue": "Etc/GMT-3"
+        },
+        {
+            "displayName": "fuseau horaire +04: 00",
+            "timezoneValue": "Etc/GMT-4"
+        },
+        {
+            "displayName": "fuseau horaire +05: 00",
+            "timezoneValue": "Etc/GMT-5"
+        },
+        {
+            "displayName": "fuseau horaire +06: 00",
+            "timezoneValue": "Etc/GMT-6"
+        },
+        {
+            "displayName": "fuseau horaire +07: 00",
+            "timezoneValue": "Etc/GMT-7"
+        },
+        {
+            "displayName": "fuseau horaire +08: 00",
+            "timezoneValue": "Etc/GMT-8"
+        },
+        {
+            "displayName": "fuseau horaire +09: 00",
+            "timezoneValue": "Etc/GMT-9"
+        },
+        {
+            "displayName": "fuseau horaire +10: 00",
+            "timezoneValue": "Etc/GMT-10"
+        },
+        {
+            "displayName": "fuseau horaire +11: 00",
+            "timezoneValue": "Etc/GMT-11"
+        },
+        {
+            "displayName": "fuseau horaire +12: 00",
+            "timezoneValue": "Etc/GMT-12"
+        },
+        {
+            "displayName": "fuseau horaire +13: 00",
+            "timezoneValue": "Etc/GMT-13"
+        },
+        {
+            "displayName": "fuseau horaire +14: 00",
+            "timezoneValue": "Etc/GMT-14"
+        }
+    ]
+}
