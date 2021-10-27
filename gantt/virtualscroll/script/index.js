@@ -406,7 +406,6 @@ ej.gantt.Gantt.Inject(ej.gantt.Selection,ej.gantt.Edit,ej.gantt.VirtualScroll);
       //updating the treegrid with the modifiedRecords
       mRecords = args.modifiedRecords;
       for (var i = 0; i < mRecords.length; i++) {
-          debugger;
         var record = {
           TaskID: mRecords[i].TaskID,
           TaskName: mRecords[i].TaskName,
