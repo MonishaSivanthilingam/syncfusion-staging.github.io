@@ -402,6 +402,18 @@ ej.gantt.Gantt.Inject(ej.gantt.Selection,ej.gantt.Edit,ej.gantt.VirtualScroll);
   projectStartDate: new Date('03/1/2019'),
   projectEndDate: new Date('12/28/2019'),
   actionComplete: function (args) {
+      if(args.requestType == 'add') {
+        var record = {
+            TaskID: args.data.TaskID,
+            TaskName: args.data.TaskName,
+            StartDate: args.data.StartDate,
+            Duration: args.data.Duration,
+            Progress: args.data.Progress,
+            EndDate: args.data.EndDate,
+            Status: args.data.Status
+          };
+          kanbanObj.addCard(record, kanbanObj.kanbanData.length + 1);
+      }
     if (args.requestType == 'save' && counter == 1) {
       //updating the treegrid with the modifiedRecords
       mRecords = args.modifiedRecords;
@@ -425,8 +437,16 @@ ej.gantt.Gantt.Inject(ej.gantt.Selection,ej.gantt.Edit,ej.gantt.VirtualScroll);
         }
         treegrid.updateRow(index, record);
         counter = 0;
-        kanbanObj.updateCard(record,record.TaskID -1);
+        if((mRecords[i].index > 0) && (mRecords[i].index < 41)) {
+            kanbanObj.updateCard(record,record.TaskID -1);
+        }
       }
+    }
+    if(args.requestType == "delete") {
+        if(args.data.index>0 && args.data.index<41) {
+            kanbanObj.deleteCard(args.data.index);
+        }
+        debugger;
     }
   },
      });
@@ -500,7 +520,20 @@ ej.treegrid.TreeGrid.Inject( ej.treegrid.Edit,ej.treegrid.VirtualScroll,ej.treeg
       }
   },
   actionComplete: function (args) {
+      debugger;
     //updating the gantt
+    if(args.action == 'add') {
+        var record = {
+            TaskID: args.data.TaskID,
+          TaskName: args.data.TaskName,
+          StartDate: args.data.StartDate,
+          Duration: args.data.Duration,
+          Progress: args.data.Progress,
+          EndDate: args.data.EndDate,
+          Status: "Open"
+          };
+          ganttChart.addRecord(record,'Top'); 
+    }
     if (args.type == 'save') {
       counter++;
       var data = {
@@ -511,6 +544,9 @@ ej.treegrid.TreeGrid.Inject( ej.treegrid.Edit,ej.treegrid.VirtualScroll,ej.treeg
         Progress: args.data.Progress,
       };
       ganttChart.updateRecordByID(data);
+    }
+    if(args.requestType == "delete") {
+        ganttChart.deleteRecord([args.data[0].index]);
     }
   }
     });
@@ -525,10 +561,6 @@ ej.treegrid.TreeGrid.Inject( ej.treegrid.Edit,ej.treegrid.VirtualScroll,ej.treeg
           { headerText: 'Testing', keyField: 'Testing' },
           { headerText: 'Done', keyField: 'Done' },
         ],
-        created: function () {
-          debugger;
-          // kanbanObj.dataSource = tempData;
-        },
         cardSettings: {
           contentField: 'TaskName',
           headerField: 'TaskID',
