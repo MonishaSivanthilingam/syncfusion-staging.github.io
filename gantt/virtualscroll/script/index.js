@@ -566,6 +566,13 @@ ej.treegrid.TreeGrid.Inject( ej.treegrid.Edit,ej.treegrid.VirtualScroll,ej.treeg
           headerField: 'TaskID',
           template: '#cardTemplate',
         },
+        actionComplete: function (args) {
+            if (args.requestType == 'cardChanged') {
+                for (var i=0;i<args.changedRecords.length;i++)
+                ganttChart.updateRecordByID(args.changedRecords[i]);
+            }
+            // kanbanObj.dataSource = tempData;
+          }
       });
       //Render initialized Kanban control
       kanbanObj.appendTo('#Kanban');
