@@ -1,12 +1,14 @@
 <html>
 
 <head>
-  <title>EJ2 Gantt</title>
+  <title>EJ2 Ganttt</title>
   <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script>
   <link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
+  <script src="script/es5-data.js" type="text/javascript"></script>
 </head>
 
 <body>
+  <h1>Gantt</h1>
   <div class="col-lg-12 col-sm-12 col-md-12" id="sidebar-section">
     <div id="wrapper">
       <div id="dockSidebar">
@@ -14,10 +16,48 @@
           <ul>
             <li class="sidebar-item" id="toggle">
               <span class="e-icons expand"></span>
-              <span class="e-text" title="menu">Treegrid</span>
+              <span class="e-text" title="menu">Edit</span>
             </li>
             <li class="sidebar-item">
-              <div id="TreeGrid"></div>
+              <div class="form-group">
+                <label for="TaskID">ID:</label>
+                <input class="e-input" type="text" placeholder="TaskID" id="TaskID" disabled />
+              </div>
+            </li>
+            <li class="sidebar-item">
+              <div class="form-group">
+                <label for="TaskName">Name:</label>
+                <input class="e-input" type="text" placeholder="TaskName" id="TaskName" />
+              </div>
+            </li>
+            <li class="sidebar-item">
+              <div class="form-group">
+                <label for="StartDate">StartDate:</label>
+                <input id="startdate" />
+              </div>
+            </li>
+            <li class="sidebar-item">
+              <div class="form-group">
+                <label for="EndDate">EndDate:</label>
+                <input id="enddate" />
+              </div>
+            </li>
+            <li class="sidebar-item">
+              <div class="form-group">
+                <label for="Duration">Duration:</label>
+                <input id="duration" type="text" />
+              </div>
+            </li>
+            <li class="sidebar-item">
+              <div class="form-group">
+                <label for="Progress">Progress:</label>
+                <input id="progress" type="text" />
+              </div>
+            </li>
+            <li class="sidebar-item">
+              <div class="form-group">
+                <button type="button" onclick="updateGanttRecord()">Submit</button>
+              </div>
             </li>
           </ul>
         </div>
@@ -27,22 +67,18 @@
       <div style="overflow-x: auto"> <button id="element1">Go to Gantt</button>
         <button id="element2">Go to Kanban</button>
         <button id="element3">Go to Treegrid</button>
+
         <div id="gantt"></div>
       </div>
     </div>
     <script>
       var dockBar = new ej.navigations.Sidebar({
-        width: '1000px',
-        dockSize: '72px',
-        enableDock: true
+        width: '600px'
       });
       dockBar.appendTo('#dockSidebar');
-      //switch the expand and collapse state
-      document.getElementById('toggle').onclick = function () {
-        dockBar.toggle();
-      };
+      dockBar.hide();
     </script>
-    <script src="script/index.js" type="text/javascript"></script>
+    <script src="script/gantt.js" type="text/javascript"></script>
     <style>
       /* Content area styles */
 
@@ -146,7 +182,7 @@
       }
 
       #dockSidebar.e-sidebar {
-        background: #2d323e;
+        background: white;
         overflow: hidden;
       }
 
@@ -182,12 +218,7 @@
         font-weight: normal;
         font-style: normal;
       }
-
-      /* end of Custom icons references */
-
-      /* end of sidebar styles */
     </style>
-  </div>
 </body>
 
 </html>
